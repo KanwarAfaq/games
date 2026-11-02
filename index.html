@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kanwar Arcade: free browser games</title>
+  <meta name="description" content="Play Starfall and Brick Rally, two free arcade games that run in your browser. No downloads, no sign-up.">
+  <meta name="theme-color" content="#0E0B2E">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Kanwar Arcade">
+  <meta property="og:title" content="Kanwar Arcade: free browser games">
+  <meta property="og:description" content="Play Starfall and Brick Rally, two free arcade games that run in your browser. No downloads, no sign-up.">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <button class="menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="Open game library">
+      <span class="menu-toggle__bars"></span>
+    </button>
+    <a class="brand" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="16" fill="#2B2DDB"/><g transform="translate(32 33) scale(1.05)"><path d="M-6 18 L0 30 L6 18 Z" fill="#FF9F55"/>
+<path d="M-8 -2 L-23 17 L-23 23 L-7 17 Z" fill="#FF6FC4"/>
+<path d="M8 -2 L23 17 L23 23 L7 17 Z" fill="#FF6FC4"/>
+<path d="M0 -25 L10 8 L8 21 L-8 21 L-10 8 Z" fill="#FFD23F"/>
+<ellipse cx="0" cy="-1" rx="3.8" ry="7.5" fill="#0E0B2E"/>
+<ellipse cx="-1" cy="-3" rx="1.3" ry="3" fill="#52F0B8"/></g></svg><span>Kanwar Arcade</span></a>
+    <nav class="menu" aria-label="Main">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="index.html#games">Games</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Game library">
+      <nav class="sidebar__site" aria-label="Site">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="index.html#games">Games</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <p class="sidebar__title">Game library</p>
+      <ul class="library">
+        <li>
+          <a class="lib-item" href="games/starfall.html">
+            <img class="lib-item__thumb" src="assets/img/thumb-starfall.svg" alt="" width="64" height="40">
+            <span class="lib-item__text">
+              <span class="lib-item__name">Starfall</span>
+              <span class="lib-item__best" data-best="starfall">No score yet</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="lib-item" href="games/brick-rally.html">
+            <img class="lib-item__thumb" src="assets/img/thumb-brick-rally.svg" alt="" width="64" height="40">
+            <span class="lib-item__text">
+              <span class="lib-item__name">Brick Rally</span>
+              <span class="lib-item__best" data-best="brick-rally">No score yet</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar__foot">
+        <p>Best scores are saved in this browser only.</p>
+        <a href="contact.html">Suggest a game</a>
+      </div>
+    </aside>
+    <div class="scrim" hidden></div>
+
+    <main class="main" id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__inner">
+          <div class="hero__copy">
+            <h1 id="hero-title">
+              <span class="hero__line"><span>Pick a game.</span></span>
+              <span class="hero__line"><span>Beat your best.</span></span>
+            </h1>
+            <p class="hero__lede">Starfall and Brick Rally run right in your browser. No downloads, no sign-up, and your best scores stay on this device.</p>
+            <div class="hero__actions">
+              <a class="btn" href="games/starfall.html">Play Starfall</a>
+              <a class="btn btn--ghost" href="games/brick-rally.html">Play Brick Rally</a>
+            </div>
+          </div>
+          <div class="hero__visual" aria-hidden="true">
+            <div class="screen"><canvas id="hero-canvas" width="560" height="420"></canvas></div>
+            <svg class="hero__sticker" viewBox="-30 -30 60 66" focusable="false"><path d="M-6 18 L0 30 L6 18 Z" fill="#FF9F55"/>
+<path d="M-8 -2 L-23 17 L-23 23 L-7 17 Z" fill="#FF6FC4"/>
+<path d="M8 -2 L23 17 L23 23 L7 17 Z" fill="#FF6FC4"/>
+<path d="M0 -25 L10 8 L8 21 L-8 21 L-10 8 Z" fill="#FFD23F"/>
+<ellipse cx="0" cy="-1" rx="3.8" ry="7.5" fill="#0E0B2E"/>
+<ellipse cx="-1" cy="-3" rx="1.3" ry="3" fill="#52F0B8"/></svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="games" aria-labelledby="games-title">
+        <div class="container">
+          <h2 class="section__title" id="games-title">Choose your game</h2>
+          <div class="game-grid">
+        <article class="game-card" style="--accent: var(--pink)">
+          <a class="game-card__media" href="games/starfall.html" tabindex="-1" aria-hidden="true">
+            <img src="assets/img/thumb-starfall.svg" alt="" width="640" height="400" loading="lazy">
+          </a>
+          <div class="game-card__body">
+            <h3><a href="games/starfall.html">Starfall</a></h3>
+            <p>Hold the line against waves of falling ships.</p>
+            <p class="game-card__controls">Steer with arrow keys, the mouse or your finger. Fire with Space, a click or a tap.</p>
+            <div class="game-card__foot">
+              <a class="btn" href="games/starfall.html">Play Starfall</a>
+              <span class="best" data-best="starfall" data-prefix="Your best: ">No score yet</span>
+            </div>
+          </div>
+        </article>
+        <article class="game-card" style="--accent: var(--cobalt)">
+          <a class="game-card__media" href="games/brick-rally.html" tabindex="-1" aria-hidden="true">
+            <img src="assets/img/thumb-brick-rally.svg" alt="" width="640" height="400" loading="lazy">
+          </a>
+          <div class="game-card__body">
+            <h3><a href="games/brick-rally.html">Brick Rally</a></h3>
+            <p>Keep the ball in play and break every brick.</p>
+            <p class="game-card__controls">Move the paddle with the mouse, your finger or arrow keys. Launch with Space or a tap.</p>
+            <div class="game-card__foot">
+              <a class="btn" href="games/brick-rally.html">Play Brick Rally</a>
+              <span class="best" data-best="brick-rally" data-prefix="Your best: ">No score yet</span>
+            </div>
+          </div>
+        </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band section" aria-labelledby="band-title">
+        <div class="container">
+          <h2 class="section__title" id="band-title">Built for quick rounds</h2>
+          <ul class="band__list">
+            <li>
+              <h3>Plays anywhere</h3>
+              <p>Keyboard, mouse or touch. Each game scales to fit your screen, from phone to desktop.</p>
+            </li>
+            <li>
+              <h3>Scores stay with you</h3>
+              <p>Your best score is saved in this browser. There is no account to make.</p>
+            </li>
+            <li>
+              <h3>Nothing to install</h3>
+              <p>Pages load once and run on your device, so a new round starts the moment you want it.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="16" fill="#2B2DDB"/><g transform="translate(32 33) scale(1.05)"><path d="M-6 18 L0 30 L6 18 Z" fill="#FF9F55"/>
+<path d="M-8 -2 L-23 17 L-23 23 L-7 17 Z" fill="#FF6FC4"/>
+<path d="M8 -2 L23 17 L23 23 L7 17 Z" fill="#FF6FC4"/>
+<path d="M0 -25 L10 8 L8 21 L-8 21 L-10 8 Z" fill="#FFD23F"/>
+<ellipse cx="0" cy="-1" rx="3.8" ry="7.5" fill="#0E0B2E"/>
+<ellipse cx="-1" cy="-3" rx="1.3" ry="3" fill="#52F0B8"/></g></svg><span>Kanwar Arcade</span></a>
+        <p>Small, fast arcade games that run in your browser. No downloads and no sign-up.</p>
+      </div>
+      <div class="footer__col">
+        <h2>Explore</h2>
+        <ul class="footer__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#games">Games</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2>Games</h2>
+        <ul class="footer__list">
+            <li><a href="games/starfall.html">Starfall</a></li>
+            <li><a href="games/brick-rally.html">Brick Rally</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2>Elsewhere</h2>
+        <ul class="footer__list">
+          <li><a href="https://github.com/KanwarAfaq/games">Source on GitHub</a></li>
+          <li><a href="https://github.com/KanwarAfaq/games/issues">Report a bug</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© 2026 Kanwar Arcade. Built by Kanwar Afaq.</span>
+      <span>Your scores never leave this device.</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/hero.js" defer></script>
+</body>
+</html>

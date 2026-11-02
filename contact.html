@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact | Kanwar Arcade</title>
+  <meta name="description" content="Send feedback, report a bug or suggest a game for Kanwar Arcade.">
+  <meta name="theme-color" content="#0E0B2E">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Kanwar Arcade">
+  <meta property="og:title" content="Contact | Kanwar Arcade">
+  <meta property="og:description" content="Send feedback, report a bug or suggest a game for Kanwar Arcade.">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <button class="menu-toggle" type="button" aria-controls="sidebar" aria-expanded="false" aria-label="Open game library">
+      <span class="menu-toggle__bars"></span>
+    </button>
+    <a class="brand" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="16" fill="#2B2DDB"/><g transform="translate(32 33) scale(1.05)"><path d="M-6 18 L0 30 L6 18 Z" fill="#FF9F55"/>
+<path d="M-8 -2 L-23 17 L-23 23 L-7 17 Z" fill="#FF6FC4"/>
+<path d="M8 -2 L23 17 L23 23 L7 17 Z" fill="#FF6FC4"/>
+<path d="M0 -25 L10 8 L8 21 L-8 21 L-10 8 Z" fill="#FFD23F"/>
+<ellipse cx="0" cy="-1" rx="3.8" ry="7.5" fill="#0E0B2E"/>
+<ellipse cx="-1" cy="-3" rx="1.3" ry="3" fill="#52F0B8"/></g></svg><span>Kanwar Arcade</span></a>
+    <nav class="menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="index.html#games">Games</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Game library">
+      <nav class="sidebar__site" aria-label="Site">
+        <a href="index.html">Home</a>
+        <a href="index.html#games">Games</a>
+        <a href="contact.html" aria-current="page">Contact</a>
+      </nav>
+      <p class="sidebar__title">Game library</p>
+      <ul class="library">
+        <li>
+          <a class="lib-item" href="games/starfall.html">
+            <img class="lib-item__thumb" src="assets/img/thumb-starfall.svg" alt="" width="64" height="40">
+            <span class="lib-item__text">
+              <span class="lib-item__name">Starfall</span>
+              <span class="lib-item__best" data-best="starfall">No score yet</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="lib-item" href="games/brick-rally.html">
+            <img class="lib-item__thumb" src="assets/img/thumb-brick-rally.svg" alt="" width="64" height="40">
+            <span class="lib-item__text">
+              <span class="lib-item__name">Brick Rally</span>
+              <span class="lib-item__best" data-best="brick-rally">No score yet</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar__foot">
+        <p>Best scores are saved in this browser only.</p>
+        <a href="contact.html">Suggest a game</a>
+      </div>
+    </aside>
+    <div class="scrim" hidden></div>
+
+    <main class="main" id="main">
+      <div class="page-head">
+        <div class="page-head__inner">
+          <h1>Contact</h1>
+          <p>Found a bug, have an idea for a new game, or just want to say hi? Send a note below.</p>
+        </div>
+      </div>
+
+      <section class="section" aria-label="Contact form">
+        <div class="contact">
+          <form class="form" id="contact-form" novalidate>
+            <div class="field">
+              <label for="c-name">Your name</label>
+              <input id="c-name" name="name" type="text" autocomplete="name" aria-describedby="c-name-error" required>
+              <span class="field__error" id="c-name-error"></span>
+            </div>
+            <div class="field" id="field-email" hidden>
+              <label for="c-email">Email address</label>
+              <input id="c-email" name="email" type="email" autocomplete="email" aria-describedby="c-email-error">
+              <span class="field__error" id="c-email-error"></span>
+            </div>
+            <div class="field">
+              <label for="c-topic">What is this about?</label>
+              <select id="c-topic" name="topic">
+                <option>Feedback</option>
+                <option>Bug report</option>
+                <option>Game idea</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="c-message">Message</label>
+              <textarea id="c-message" name="message" aria-describedby="c-message-error" required></textarea>
+              <span class="field__error" id="c-message-error"></span>
+            </div>
+            <p class="form__notice" id="contact-notice">This form opens a public GitHub issue with your message already filled in. Your name and message will be visible to everyone, so leave out private details.</p>
+            <div>
+              <button class="btn" type="submit">Send message</button>
+            </div>
+            <p class="form__status" id="contact-status" role="status" aria-live="polite"></p>
+            <noscript><p>The form needs JavaScript. You can also <a href="https://github.com/KanwarAfaq/games/issues/new">open an issue on GitHub</a>.</p></noscript>
+          </form>
+
+          <aside class="contact__side">
+            <h2>Other ways to reach me</h2>
+            <ul>
+              <li><a href="https://github.com/KanwarAfaq/games/issues">Open an issue on GitHub</a> for bugs and feature ideas.</li>
+              <li><a href="https://github.com/KanwarAfaq/games">Read the source code</a> to see how the games are built.</li>
+              <li>Tell me which game you want next, and what makes it fun to you.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="index.html"><svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect width="64" height="64" rx="16" fill="#2B2DDB"/><g transform="translate(32 33) scale(1.05)"><path d="M-6 18 L0 30 L6 18 Z" fill="#FF9F55"/>
+<path d="M-8 -2 L-23 17 L-23 23 L-7 17 Z" fill="#FF6FC4"/>
+<path d="M8 -2 L23 17 L23 23 L7 17 Z" fill="#FF6FC4"/>
+<path d="M0 -25 L10 8 L8 21 L-8 21 L-10 8 Z" fill="#FFD23F"/>
+<ellipse cx="0" cy="-1" rx="3.8" ry="7.5" fill="#0E0B2E"/>
+<ellipse cx="-1" cy="-3" rx="1.3" ry="3" fill="#52F0B8"/></g></svg><span>Kanwar Arcade</span></a>
+        <p>Small, fast arcade games that run in your browser. No downloads and no sign-up.</p>
+      </div>
+      <div class="footer__col">
+        <h2>Explore</h2>
+        <ul class="footer__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#games">Games</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2>Games</h2>
+        <ul class="footer__list">
+            <li><a href="games/starfall.html">Starfall</a></li>
+            <li><a href="games/brick-rally.html">Brick Rally</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2>Elsewhere</h2>
+        <ul class="footer__list">
+          <li><a href="https://github.com/KanwarAfaq/games">Source on GitHub</a></li>
+          <li><a href="https://github.com/KanwarAfaq/games/issues">Report a bug</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© 2026 Kanwar Arcade. Built by Kanwar Afaq.</span>
+      <span>Your scores never leave this device.</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/contact.js" defer></script>
+</body>
+</html>
