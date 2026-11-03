@@ -53,6 +53,9 @@
   var stage = canvas.parentElement;
   var view = A.fitCanvas(canvas, W, H);
   var overlay = A.overlay();
+  var fx = A.createFx();
+  var music = A.music;
+  A.tools();
 
   var setScore = A.text('hud-score');
   var setBest = A.text('hud-best');
@@ -220,6 +223,7 @@
       pops.push({ x: br.x + br.w / 2, y: br.y, text: '+' + pts, life: 0.7 });
       burst(br.x + br.w / 2, br.y + br.h / 2, brickColor({ hp: br.max, metal: false }), 10, 220, 3.4);
       sfx.brick(streak);
+      fx.ring(br.x + br.w / 2, br.y + br.h / 2, brickColor({ hp: br.max, metal: false }), 46, 0.35);
       maybeDrop(br);
       if (remaining <= 0) levelClear();
     } else {
@@ -306,6 +310,7 @@
     streak = 0;
     addShake(10);
     sfx.hurt();
+    fx.flash(C.pink, 0.4);
     drops = [];
     wideTime = 0; slowTime = 0;
     if (lives <= 0) {
@@ -326,6 +331,8 @@
     bannerText = 'Level ' + level + ' cleared';
     bannerTime = 2.1;
     sfx.levelup();
+    fx.ring(W / 2, H / 2, C.butter, 360, 0.9);
+    fx.flash(C.butter, 0.25);
     drops = [];
     balls = [];
     syncHud();
@@ -349,11 +356,14 @@
     state = 'playing';
     overlay.hide();
     sfx.start();
+    music.play('brick-rally');
     updatePauseButton();
   }
 
   function gameOver() {
     state = 'over';
+    music.stop();
+    fx.flash(C.pink, 0.4);
     sfx.over();
     if (score > best) {
       best = score;
@@ -373,9 +383,11 @@
   function togglePause() {
     if (state === 'playing') {
       state = 'paused';
+      music.pause();
       overlay.show('Paused', 'Take a breath. Your game is waiting.', 'Resume', togglePause, true);
     } else if (state === 'paused') {
       state = 'playing';
+      music.resume();
       overlay.hide();
     }
     updatePauseButton();
@@ -429,6 +441,7 @@
   function update(dt) {
     if (state === 'paused') return;
     clock += dt;
+    fx.update(dt);
 
     for (var i = sparks.length - 1; i >= 0; i--) {
       var p = sparks[i];
@@ -539,6 +552,8 @@
     ctx.setTransform(k, 0, 0, k, 0, 0);
     ctx.fillStyle = C.bg;
     ctx.fillRect(0, 0, W, H);
+    A.glow(ctx, W * (0.25 + 0.1 * Math.sin(clock * 0.25)), H * 0.35, 320, C.pink, 0.1);
+    A.glow(ctx, W * (0.78 + 0.08 * Math.cos(clock * 0.2)), H * 0.65, 300, C.mint, 0.08);
 
     ctx.strokeStyle = C.grid;
     ctx.lineWidth = 1;
@@ -581,6 +596,7 @@
       ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r + 2.5, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = C.cloud;
       ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2); ctx.fill();
+      A.glow(ctx, ball.x, ball.y, 40, C.cloud, 0.45);
     }
 
     for (var p = 0; p < sparks.length; p++) {
@@ -591,6 +607,8 @@
     }
     ctx.globalAlpha = 1;
     ctx.restore();
+
+    fx.draw(ctx, W, H);
 
     // floating text
     ctx.font = '800 15px "Bricolage Grotesque", system-ui, sans-serif';

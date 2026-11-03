@@ -18,6 +18,9 @@
   var stage = canvas.parentElement;
   var view = A.fitCanvas(canvas, W, H);
   var overlay = A.overlay();
+  var fx = A.createFx();
+  var music = A.music;
+  A.tools();
 
   var setScore = A.text('hud-score');
   var setBest = A.text('hud-best');
@@ -159,6 +162,7 @@ var bestAtStart = best;
     burst(e.x, e.y, color, e.type === 'tank' ? 28 : 16, 230, 3.2);
     burst(e.x, e.y, C.cloud, 6, 160, 2);
     sfx.boom();
+    fx.ring(e.x, e.y, color, e.type === 'tank' ? 90 : 55, 0.4);
     addShake(e.type === 'tank' ? 6 : 3);
     addScore(e.pts, e.x, e.y);
     maybeDrop(e.x, e.y, e.type === 'tank' ? 0.4 : 0.1);
@@ -167,6 +171,8 @@ var bestAtStart = best;
   function killBoss() {
     for (var i = 0; i < 5; i++) burst(boss.x + U.rand(-50, 50), boss.y + U.rand(-24, 24), i % 2 ? C.pink : C.butter, 22, 300, 4);
     sfx.boom();
+    fx.ring(boss.x, boss.y, C.butter, 260, 0.9);
+    fx.flash(C.butter, 0.35);
     addShake(16);
     addScore(3000, boss.x, boss.y);
     maybeDrop(boss.x - 30, boss.y, 1);
@@ -200,6 +206,8 @@ var bestAtStart = best;
     burst(player.x, player.y, C.butter, 30, 320, 4);
     burst(player.x, player.y, C.pink, 12, 240, 3);
     sfx.hurt();
+    fx.flash(C.coral, 0.45);
+    fx.ring(player.x, player.y, C.butter, 150, 0.6);
     addShake(14);
     combo = 0; comboTimer = 0;
     enemyShots = [];
@@ -232,11 +240,14 @@ var bestAtStart = best;
     state = 'playing';
     overlay.hide();
     sfx.start();
+    music.play('starfall');
     updatePauseButton();
   }
 
   function gameOver() {
     state = 'over';
+    music.stop();
+    fx.flash(C.pink, 0.4);
     sfx.over();
     if (score > best) {
       best = score;
@@ -256,9 +267,11 @@ var bestAtStart = best;
   function togglePause() {
     if (state === 'playing') {
       state = 'paused';
+      music.pause();
       overlay.show('Paused', 'Take a breath. Your game is waiting.', 'Resume', togglePause, true);
     } else if (state === 'paused') {
       state = 'playing';
+      music.resume();
       overlay.hide();
     }
     updatePauseButton();
@@ -338,6 +351,7 @@ var bestAtStart = best;
     }
 
     updateEffects(dt);
+    fx.update(dt);
     if (state !== 'playing') return;
 
     updatePlayer(dt);
@@ -680,6 +694,8 @@ var bestAtStart = best;
     ctx.setTransform(k, 0, 0, k, 0, 0);
     ctx.fillStyle = C.night;
     ctx.fillRect(0, 0, W, H);
+    A.glow(ctx, W * (0.3 + 0.12 * Math.sin(clock * 0.2)), H * 0.3, 300, C.cobalt || '#2B2DDB', 0.22);
+    A.glow(ctx, W * (0.75 + 0.1 * Math.cos(clock * 0.17)), H * 0.7, 260, C.pink, 0.1);
 
     // stars
     ctx.fillStyle = C.cloud;
@@ -707,16 +723,21 @@ var bestAtStart = best;
       ctx.beginPath(); ctx.arc(es.x, es.y, es.r, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = C.cloud;
       ctx.beginPath(); ctx.arc(es.x, es.y, es.r * 0.45, 0, Math.PI * 2); ctx.fill();
+      A.glow(ctx, es.x, es.y, 26, C.pink, 0.45);
     }
 
     // player bullets
     ctx.fillStyle = C.mint;
-    for (var b = 0; b < bullets.length; b++) ctx.fillRect(bullets[b].x - 2.5, bullets[b].y - 8, 5, 16);
+    for (var b = 0; b < bullets.length; b++) {
+      ctx.fillRect(bullets[b].x - 2.5, bullets[b].y - 8, 5, 16);
+      A.glow(ctx, bullets[b].x, bullets[b].y, 22, C.mint, 0.4);
+    }
 
     // player
     if (state !== 'over' || lives > 0) {
       var blink = player.inv > 0 && Math.floor(clock * 14) % 2 === 0;
       if (!blink && (state === 'playing' || state === 'paused' || state === 'title')) {
+        A.glow(ctx, player.x, player.y + 18, 46, C.butter, 0.25 + 0.1 * Math.sin(clock * 30));
         drawShip(player.x, player.y, 1, 0.5 + 0.5 * Math.sin(clock * 40));
         if (player.shield) {
           ctx.strokeStyle = C.cloud;
@@ -737,6 +758,8 @@ var bestAtStart = best;
     }
     ctx.globalAlpha = 1;
     ctx.restore();
+
+    fx.draw(ctx, W, H);
 
     // floating text
     ctx.font = '800 15px "Bricolage Grotesque", system-ui, sans-serif';

@@ -1,0 +1,16 @@
+# Kanwar Arcade
+
+> Free browser games by Kanwar Afaq. 5 games, no downloads, no accounts, no ads. Scores are saved only in the player's own browser.
+
+## Games
+- [Starfall](https://games-psi-ashy.vercel.app/games/starfall.html): Starfall is a free space shooter you can play in your browser. Dodge, shoot, grab power-ups and beat the boss.
+- [Brick Rally](https://games-psi-ashy.vercel.app/games/brick-rally.html): Brick Rally is a free brick-breaker you can play in your browser. Five levels, power-ups and a streak multiplier.
+- [Serpentine](https://games-psi-ashy.vercel.app/games/serpentine.html): Serpentine is a free snake game for your browser with smooth glowing graphics, combo fruit and rocks to dodge. Play with arrow keys or swipe.
+- [Skyhop](https://games-psi-ashy.vercel.app/games/skyhop.html): Skyhop is a free one-tap flying game for your browser. Flap through gaps, collect stars and fly from sunrise into the night.
+- [Lumenfall](https://games-psi-ashy.vercel.app/games/lumenfall.html): Lumenfall is a free 3D adventure that runs in your browser. Explore Crystal Valley, fight enemies, find nine energy crystals and reach the final portal.
+
+## Site
+- [Home](https://games-psi-ashy.vercel.app/): all games in one place
+- [Contact](https://games-psi-ashy.vercel.app/contact.html): feedback and bug reports (opens a public GitHub issue)
+- [Source code](https://github.com/KanwarAfaq/games): MIT-style open project on GitHub
+- [Full text for AI assistants](https://games-psi-ashy.vercel.app/llms-full.txt)

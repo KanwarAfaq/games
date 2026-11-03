@@ -95,7 +95,12 @@
   var sfx = {
     unlock: function () { getAudio(); },
     isMuted: function () { return muted; },
-    setMuted: function (v) { muted = !!v; store.set('muted', muted); },
+    setMuted: function (v) {
+      muted = !!v;
+      store.set('muted', muted);
+      if (muted && window.Arcade && window.Arcade.music) window.Arcade.music.stop();
+      else if (window.Arcade && window.Arcade.music) window.Arcade.music.resume();
+    },
 
     shoot: function () { tone({ freq: 920, to: 380, dur: 0.07, vol: 0.022 }); },
     hit: function () { tone({ freq: 320, to: 160, dur: 0.07, vol: 0.04 }); },
@@ -288,6 +293,185 @@
     return { refresh: refresh };
   }
 
+
+  /* ---------- Light and effects ---------- */
+
+  // '#RRGGBB' or '#RGB' + alpha -> 'rgba(...)'. Other colour strings pass through.
+  function rgba(color, a) {
+    if (typeof color === 'string' && color.charAt(0) === '#') {
+      var h = color.slice(1);
+      if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+      var n = parseInt(h, 16);
+      return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+    }
+    return color;
+  }
+
+  // Soft additive halo: the basic building block of every light effect.
+  function glow(ctx, x, y, r, color, alpha) {
+    if (r <= 0 || alpha <= 0) return;
+    var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, rgba(color, alpha));
+    g.addColorStop(0.45, rgba(color, alpha * 0.35));
+    g.addColorStop(1, rgba(color, 0));
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = g;
+    ctx.fillRect(x - r, y - r, r * 2, r * 2);
+    ctx.restore();
+  }
+
+  // Shockwave rings and full-screen flashes. Both are skipped for reduced motion.
+  function createFx() {
+    var rings = [];
+    var flashes = [];
+    return {
+      ring: function (x, y, color, maxR, dur) {
+        if (util.reduceMotion) return;
+        rings.push({ x: x, y: y, c: color, r: maxR || 80, t: 0, d: dur || 0.5 });
+      },
+      flash: function (color, alpha) {
+        if (util.reduceMotion) return;
+        flashes.push({ c: color, a: Math.min(alpha || 0.3, 0.6), t: 0, d: 0.35 });
+      },
+      clear: function () { rings.length = 0; flashes.length = 0; },
+      update: function (dt) {
+        var i;
+        for (i = rings.length - 1; i >= 0; i--) { rings[i].t += dt; if (rings[i].t >= rings[i].d) rings.splice(i, 1); }
+        for (i = flashes.length - 1; i >= 0; i--) { flashes[i].t += dt; if (flashes[i].t >= flashes[i].d) flashes.splice(i, 1); }
+      },
+      draw: function (ctx, W, H) {
+        var i, k, o;
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        for (i = 0; i < rings.length; i++) {
+          o = rings[i];
+          k = o.t / o.d;
+          var rr = o.r * (1 - Math.pow(1 - k, 3));
+          ctx.lineWidth = 2 + 5 * (1 - k);
+          ctx.strokeStyle = rgba(o.c, 0.75 * (1 - k));
+          ctx.beginPath();
+          ctx.arc(o.x, o.y, rr, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        ctx.restore();
+        for (i = 0; i < flashes.length; i++) {
+          o = flashes[i];
+          ctx.fillStyle = rgba(o.c, o.a * (1 - o.t / o.d));
+          ctx.fillRect(0, 0, W, H);
+        }
+      }
+    };
+  }
+
+  /* ---------- Background music (synthesised, looping, optional) ---------- */
+
+  var THEMES = {
+    starfall:   { bpm: 132, wave: 'sawtooth', root: 110, scale: [0, 3, 7, 10], pattern: [0, 2, 1, 3, 0, 2, 3, 1], bass: [0, 0, 3, 2] },
+    'brick-rally': { bpm: 120, wave: 'square', root: 130.8, scale: [0, 4, 7, 9], pattern: [0, 1, 2, 1, 3, 2, 1, 0], bass: [0, 3, 2, 3] },
+    serpentine: { bpm: 108, wave: 'triangle', root: 123.5, scale: [0, 2, 5, 7], pattern: [0, 1, 2, 3, 2, 1, 3, 2], bass: [0, 2, 0, 3] },
+    skyhop:     { bpm: 100, wave: 'sine', root: 146.8, scale: [0, 2, 4, 7], pattern: [0, 2, 3, 1, 2, 3, 1, 0], bass: [0, 0, 2, 3] }
+  };
+
+  var musicOn = !!store.get('music', true);
+  var mus = { theme: null, timer: 0, step: 0, next: 0, paused: false, gain: null };
+
+  function semi(root, n) { return root * Math.pow(2, n / 12); }
+
+  function musicNote(a, t, freq, dur, wave, vol) {
+    var osc = a.createOscillator();
+    var g = a.createGain();
+    osc.type = wave;
+    osc.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(vol, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    osc.connect(g);
+    g.connect(mus.gain);
+    osc.start(t);
+    osc.stop(t + dur + 0.05);
+  }
+
+  function musicTick() {
+    var a = audio;
+    var th = THEMES[mus.theme];
+    if (!a || !th || mus.paused) return;
+    var beat = 60 / th.bpm / 2;
+    while (mus.next < a.currentTime + 0.25) {
+      var i = mus.step;
+      var note = th.scale[th.pattern[i % th.pattern.length]] + (i % 16 >= 8 ? 12 : 0);
+      musicNote(a, mus.next, semi(th.root * 2, note), beat * 1.6, th.wave, 0.05);
+      if (i % 4 === 0) {
+        var b = th.scale[th.bass[(i / 4) % th.bass.length | 0]];
+        musicNote(a, mus.next, semi(th.root / 2, b), beat * 3.6, 'triangle', 0.09);
+      }
+      mus.next += beat;
+      mus.step++;
+    }
+  }
+
+  var music = {
+    isEnabled: function () { return musicOn; },
+    setEnabled: function (v) {
+      musicOn = !!v;
+      store.set('music', musicOn);
+      if (!musicOn) music.stop();
+      else if (mus.theme && !mus.timer) music.play(mus.theme);
+    },
+    play: function (theme) {
+      mus.theme = theme;
+      if (!musicOn || muted) return;
+      var a = getAudio();
+      if (!a || !THEMES[theme]) return;
+      window.clearInterval(mus.timer);
+      if (!mus.gain) { mus.gain = a.createGain(); mus.gain.connect(a.destination); }
+      mus.gain.gain.value = 0.5;
+      mus.paused = false;
+      mus.step = 0;
+      mus.next = a.currentTime + 0.1;
+      mus.timer = window.setInterval(musicTick, 80);
+    },
+    stop: function () {
+      window.clearInterval(mus.timer);
+      mus.timer = 0;
+    },
+    pause: function () { mus.paused = true; },
+    resume: function () {
+      if (!mus.theme || !musicOn || muted) return;
+      if (!mus.timer) { music.play(mus.theme); return; }
+      mus.paused = false;
+      if (audio) mus.next = Math.max(mus.next, audio.currentTime + 0.05);
+    }
+  };
+
+  // Wires the music and fullscreen buttons in the game toolbar, plus the N key.
+  function tools() {
+    var cabinet = document.querySelector('.cabinet');
+    var musicBtn = bindToggleButton('btn-music',
+      function () { return musicOn ? 'Music on' : 'Music off'; },
+      function () { return musicOn; },
+      function () { music.setEnabled(!musicOn); });
+    var fullBtn = document.getElementById('btn-full');
+    var canFull = cabinet && (cabinet.requestFullscreen || cabinet.webkitRequestFullscreen);
+    function toggleFull() {
+      if (!canFull) return;
+      var on = document.fullscreenElement || document.webkitFullscreenElement;
+      if (on) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      else (cabinet.requestFullscreen || cabinet.webkitRequestFullscreen).call(cabinet);
+    }
+    if (fullBtn) {
+      if (!canFull) fullBtn.hidden = true;
+      fullBtn.addEventListener('click', function () { toggleFull(); fullBtn.blur(); });
+    }
+    window.addEventListener('keydown', function (e) {
+      var tag = e.target && e.target.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+      if (e.code === 'KeyN') { music.setEnabled(!musicOn); musicBtn.refresh(); }
+    });
+    return { refreshMusic: musicBtn.refresh };
+  }
+
   window.Arcade = {
     store: store,
     util: util,
@@ -298,6 +482,11 @@
     text: text,
     pips: pips,
     overlay: overlay,
-    bindToggleButton: bindToggleButton
+    bindToggleButton: bindToggleButton,
+    rgba: rgba,
+    glow: glow,
+    createFx: createFx,
+    music: music,
+    tools: tools
   };
 })();

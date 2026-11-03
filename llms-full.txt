@@ -1,0 +1,119 @@
+# Kanwar Arcade: full guide
+
+Kanwar Arcade is a free collection of browser games made by Kanwar Afaq. Games run in any modern browser with no download, account or advertising. Best scores are stored in the browser's local storage and never sent anywhere.
+
+## Starfall (Space shooter)
+URL: https://games-psi-ashy.vercel.app/games/starfall.html
+Starfall is a free space shooter you can play in your browser. Dodge, shoot, grab power-ups and beat the boss.
+Controls: Steer with arrow keys, the mouse or your finger. Fire with Space, a click or a tap.
+Mouse or touch: drag to steer. Press and hold to fire, or turn on auto-fire.
+- ←→↑↓: Move
+- WASD: Move
+- Space: Fire (hold)
+- F: Auto-fire on or off
+- P: Pause
+- M: Mute
+Tips:
+- Power-ups drop from ships: R is rapid fire, T is triple shot, S is a shield and + is an extra life.
+- Destroy ships in quick succession to raise your multiplier to x5. A hit or a missed ship resets it.
+- A boss arrives every fourth wave. Keep moving and keep firing.
+FAQ:
+Q: How do you play Starfall?
+A: Steer your ship with the arrow keys, the mouse or your finger and fire with Space or a tap. Shoot falling ships, collect power-ups and beat the boss every fourth wave.
+Q: Is Starfall free to play?
+A: Yes. It runs in your browser with no download, no account and no ads.
+
+## Brick Rally (Brick breaker)
+URL: https://games-psi-ashy.vercel.app/games/brick-rally.html
+Brick Rally is a free brick-breaker you can play in your browser. Five levels, power-ups and a streak multiplier.
+Controls: Move the paddle with the mouse, your finger or arrow keys. Launch with Space or a tap.
+Mouse or touch: slide to move the paddle. Click or tap to launch.
+- ←→: Move paddle
+- AD: Move paddle
+- Space: Launch the ball
+- P: Pause
+- M: Mute
+Tips:
+- Hit the ball with the edge of the paddle to send it off at a sharper angle.
+- Grey bricks never break. Clear every other brick to finish the level.
+- Power-ups drop from bricks: W is a wide paddle, M is multi-ball, S slows the ball and + is an extra life.
+- Break bricks without touching the paddle to build a multiplier of up to x4.
+FAQ:
+Q: How do you play Brick Rally?
+A: Slide the paddle with the mouse, your finger or the arrow keys and launch the ball with Space or a tap. Break every brick to clear the level.
+Q: How many levels does Brick Rally have?
+A: Five levels, with power-ups such as a wide paddle, multi-ball and slow ball.
+
+## Serpentine (Snake game)
+URL: https://games-psi-ashy.vercel.app/games/serpentine.html
+Serpentine is a free snake game for your browser with smooth glowing graphics, combo fruit and rocks to dodge. Play with arrow keys or swipe.
+Controls: Steer with the arrow keys or swipe on the board.
+Touch or mouse: swipe or drag on the board to turn.
+- ←→↑↓: Steer
+- WASD: Steer
+- Space: Start or resume
+- P: Pause
+- M: Mute
+- N: Music on or off
+Tips:
+- Eat fruit quickly one after another to build a combo multiplier.
+- Walls, rocks and your own tail all end the run, so leave yourself room to turn.
+- Plan your route a few cells ahead. The snake speeds up as it grows.
+FAQ:
+Q: How do you play Serpentine?
+A: Steer the snake with the arrow keys, WASD or a swipe. Eat fruit to grow and score, and avoid walls, rocks and your own tail.
+Q: Does Serpentine work on a phone?
+A: Yes. Swipe on the board to turn. The game scales to fit any screen.
+
+## Skyhop (One-tap flyer)
+URL: https://games-psi-ashy.vercel.app/games/skyhop.html
+Skyhop is a free one-tap flying game for your browser. Flap through gaps, collect stars and fly from sunrise into the night.
+Controls: Tap, click or press Space to flap.
+Touch or mouse: tap or click anywhere to flap.
+- Space: Flap
+- ↑ or W: Flap
+- P: Pause
+- M: Mute
+- N: Music on or off
+Tips:
+- Short, steady taps keep you level better than frantic ones.
+- Stars are worth grabbing, but a clean line through the gap matters more.
+- The sky changes from dawn to night as you go. Keep going to see every zone.
+FAQ:
+Q: How do you play Skyhop?
+A: Tap, click or press Space to flap. Fly through the gaps, collect stars and avoid the obstacles.
+Q: Is Skyhop free?
+A: Yes. It is free, runs in your browser and needs no download or sign-up.
+
+## Lumenfall (3D adventure)
+URL: https://games-psi-ashy.vercel.app/games/lumenfall.html
+Lumenfall is a free 3D adventure that runs in your browser. Explore Crystal Valley, fight enemies, find nine energy crystals and reach the final portal.
+Controls: Move with WASD, look with the mouse, jump with Space and attack with a click.
+Lumenfall needs a keyboard and mouse, so it is built for desktop and laptop browsers.
+- WASD: Move
+- Mouse: Look around
+- Shift: Run
+- Space: Jump
+- Click: Attack
+- Esc: Pause
+Tips:
+- Collect all nine glowing crystals to open the final portal.
+- Watch your health bar. Enemies hit harder as you go deeper into the realm.
+- Check the mini-map in the corner to find crystals you have missed.
+FAQ:
+Q: Can I play Lumenfall on my phone?
+A: Lumenfall uses a keyboard and mouse with pointer lock, so it works best on a desktop or laptop in a current browser.
+Q: What do I need to run Lumenfall?
+A: A recent browser with WebGL 2. The first load downloads a few megabytes of game code and the character model.
+
+## General FAQ
+Q: What is Kanwar Arcade?
+A: Kanwar Arcade is a free collection of five browser games: Starfall, Brick Rally, Serpentine, Skyhop and Lumenfall. They run on any modern device with no download, no account and no ads.
+Q: Are the games really free?
+A: Yes. Every game is free, there are no in-app purchases and nothing to install.
+Q: Do the games work on a phone?
+A: Starfall, Brick Rally, Serpentine and Skyhop work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.
+Q: Where are my high scores saved?
+A: Best scores are saved in your own browser with local storage. They never leave your device and there is no account to make.
+Q: Which game should I try first?
+A: Try Starfall for fast action, Skyhop for a one-tap challenge, Serpentine for a classic with a twist, and Lumenfall for a 3D adventure.
