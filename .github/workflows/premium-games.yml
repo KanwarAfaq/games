@@ -7,6 +7,7 @@ on:
     paths:
       - 'assets/js/aether-run.js'
       - 'assets/js/moonlit-grove.js'
+      - 'assets/js/site.js'
       - 'games/aether-run.html'
       - 'games/moonlit-grove.html'
       - 'scripts/build.mjs'
@@ -27,6 +28,7 @@ jobs:
         run: |
           node --check assets/js/aether-run.js
           node --check assets/js/moonlit-grove.js
+          node --check assets/js/site.js
           node --check scripts/build.mjs
           node --check scripts/test-premium.mjs
       - name: Generate static HTML, library and discovery files
