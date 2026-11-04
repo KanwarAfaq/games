@@ -225,6 +225,34 @@ const GAMES = [
       ['What do I need to run Lumenfall?', 'A recent browser with WebGL 2. The first load downloads a few megabytes of game code and the character model.'],
     ],
   },
+  {
+    id: 'aether-run',
+    kind: 'bespoke',
+    name: 'Aether Run',
+    page: 'games/aether-run.html',
+    thumb: 'assets/img/thumb-aether-run.svg',
+    og: 'assets/img/og-starfall.png',
+    genre: 'Neon hover racer',
+    accent: 'var(--mint)',
+    tagline: 'Race a luminous skyline in your own antigravity craft.',
+    description: 'Aether Run is a neon hover-racing browser game with a procedural skyline, glowing light trails, collectable energy rings, and atmospheric sound effects.',
+    controls: 'Steer with A and D or arrows. Hold Shift to boost; mobile touch controls are included.',
+    faq: [['How do you play Aether Run?', 'Steer around red barriers, collect blue energy rings and hold boost to go faster.'], ['Is Aether Run playable on a phone?', 'Yes. The game has touch steering and boost controls.']],
+  },
+  {
+    id: 'moonlit-grove',
+    kind: 'bespoke',
+    name: 'Moonlit Grove',
+    page: 'games/moonlit-grove.html',
+    thumb: 'assets/img/thumb-moonlit-grove.svg',
+    og: 'assets/img/og-serpentine.png',
+    genre: 'Fantasy survival',
+    accent: 'var(--mint)',
+    tagline: 'Protect an enchanted sanctuary against the rising shadows.',
+    description: 'Moonlit Grove is a fantasy survival browser game featuring an enchanted sanctuary, spellcasting, glowing particles, progressive enemy waves and original synth sound effects.',
+    controls: 'Move with WASD or arrows, aim with the pointer and dash with Space or Shift. Touch controls included.',
+    faq: [['How do you play Moonlit Grove?', 'Move through the enchanted grove, aim with the mouse or touch, cast automatic spells and dash away from shadow enemies.'], ['Is Moonlit Grove free?', 'Yes, it runs entirely in your browser with no installation.']],
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -265,7 +293,7 @@ const WEBSITE = {
   '@id': `${SITE.url}/#website`,
   url: `${SITE.url}/`,
   name: SITE.name,
-  description: 'Free browser games: Starfall, Brick Rally, Serpentine, Skyhop and Lumenfall.',
+  description: 'Free browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lumenfall, Aether Run and Moonlit Grove.',
   inLanguage: 'en',
   publisher: { '@id': `${SITE.url}/#org` },
 };
@@ -445,11 +473,11 @@ const faqHtml = (faq, title = 'Frequently asked questions') =>
         </section>`;
 
 const HOME_FAQ = [
-  ['What is Kanwar Arcade?', 'Kanwar Arcade is a free collection of five browser games: Starfall, Brick Rally, Serpentine, Skyhop and Lumenfall. They run on any modern device with no download, no account and no ads.'],
+  ['What is Kanwar Arcade?', 'Kanwar Arcade is a free collection of seven browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lumenfall, Aether Run and Moonlit Grove. They run on any modern device with no download, no account and no ads.'],
   ['Are the games really free?', 'Yes. Every game is free, there are no in-app purchases and nothing to install.'],
-  ['Do the games work on a phone?', 'Starfall, Brick Rally, Serpentine and Skyhop work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.'],
+  ['Do the games work on a phone?', 'Starfall, Brick Rally, Serpentine, Skyhop, Aether Run and Moonlit Grove work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.'],
   ['Where are my high scores saved?', 'Best scores are saved in your own browser with local storage. They never leave your device and there is no account to make.'],
-  ['Which game should I try first?', 'Try Starfall for fast action, Skyhop for a one-tap challenge, Serpentine for a classic with a twist, and Lumenfall for a 3D adventure.'],
+  ['Which game should I try first?', 'Try Aether Run for neon racing, Moonlit Grove for magical survival, Starfall for action, and Lumenfall for 3D adventure.'],
 ];
 
 function homePage() {
@@ -478,7 +506,7 @@ function homePage() {
               <span class="hero__line"><span>Pick a game.</span></span>
               <span class="hero__line"><span>Beat your best.</span></span>
             </h1>
-            <p class="hero__lede">Five free games that run right in your browser: a space shooter, a brick breaker, a snake game, a one-tap flyer and a 3D adventure. No downloads, no sign-up, and your best scores stay on this device.</p>
+            <p class="hero__lede">Seven free games that run right in your browser: a space shooter, a brick breaker, a snake game, a one-tap flyer, a 3D adventure, a neon hover racer and a fantasy survival arena. No downloads, no sign-up, and your best scores stay on this device.</p>
             <div class="hero__actions">
               <a class="btn" href="games/starfall.html">Play Starfall</a>
               <a class="btn btn--ghost" href="games/lumenfall.html">Explore Lumenfall in 3D</a>
@@ -533,7 +561,7 @@ ${cards}
   return shell({
     file: 'index.html',
     title: SITE.name,
-    description: 'Play five free browser games: Starfall, Brick Rally, Serpentine, Skyhop and the 3D adventure Lumenfall. No downloads, no sign-up.',
+    description: 'Play seven free browser games, including Aether Run, Moonlit Grove, Starfall and the 3D adventure Lumenfall. No downloads, no sign-up.',
     active: 'home',
     body,
     scripts: ['assets/js/hero.js'],
@@ -1002,7 +1030,7 @@ const pages = {
 };
 GAMES.forEach((g, i) => {
   const next = GAMES[(i + 1) % GAMES.length];
-  pages[g.page] = g.kind === 'external' ? externalGamePage(g, next) : gamePage(g, next);
+  if (g.kind !== 'bespoke') pages[g.page] = g.kind === 'external' ? externalGamePage(g, next) : gamePage(g, next);
 });
 
 for (const [file, content] of Object.entries(pages)) {
