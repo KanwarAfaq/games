@@ -48,6 +48,7 @@ for(const id of ['aether-run','moonlit-grove']){
   assert.match(html,/<canvas id="game"/);
   assert.match(html,/id="start"/);
   assert.match(html,/id="overlay"/);
+  assert.doesNotMatch(html,/<script(?![^>]*\bsrc=)[^>]*>[\s\S]*?<\/script>/i,'strict CSP forbids inline JavaScript');
   assert.match(html,new RegExp('../assets/js/'+id+'\\.js'));
   assert.match(html,/<meta name="description"/);
 }
