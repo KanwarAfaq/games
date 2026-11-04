@@ -22,7 +22,7 @@
  $('start').onclick=()=>S.mode==='paused'?pause():start();$('pause').onclick=pause;
  $('sound').onclick=()=>{S.muted=!S.muted;try{localStorage.setItem('arcade-grove-mute',S.muted?'1':'0');}catch{}if(!S.muted)beep(700);ui();};
  function dash(){if(S.mode!=='running'||S.dashCool>0)return;S.dash=.2;S.inv=.35;S.dashCool=3;burst(S.x,S.y,'#95f8ff',30);beep(170,.17,'sawtooth',.065,650);}
- $('dash').onclick=dash;
+ $('dash').onclick=dash;$('mobile-dash').onclick=dash;
  window.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' ','Shift','w','a','s','d','p','Escape'].includes(e.key))e.preventDefault();S.keys[e.key.toLowerCase()]=true;if(e.repeat)return;if(e.key==='Escape'||e.key.toLowerCase()==='p')pause();if(e.key==='Shift'||e.key===' ')S.mode==='running'?dash():start();});
  window.addEventListener('keyup',e=>{S.keys[e.key.toLowerCase()]=false;});
  window.addEventListener('blur',()=>{S.keys={};if(S.mode==='running')pause();});
