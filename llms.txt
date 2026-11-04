@@ -1,6 +1,6 @@
 # Kanwar Arcade
 
-> Free browser games by Kanwar Afaq. 7 games, no downloads, no accounts, no ads. Scores are saved only in the player's own browser.
+> Free browser games by Kanwar Afaq. 9 games, no downloads, no accounts, no ads. Scores are saved only in the player's own browser.
 
 ## Games
 - [Starfall](https://games-psi-ashy.vercel.app/games/starfall.html): Starfall is a free space shooter you can play in your browser. Dodge, shoot, grab power-ups and beat the boss.
@@ -10,6 +10,8 @@
 - [Lumenfall](https://games-psi-ashy.vercel.app/games/lumenfall.html): Lumenfall is a free 3D adventure that runs in your browser. Explore Crystal Valley, fight enemies, find nine energy crystals and reach the final portal.
 - [Aether Run](https://games-psi-ashy.vercel.app/games/aether-run.html): Aether Run is a neon hover-racing browser game with a procedural skyline, glowing light trails, collectable energy rings, and atmospheric sound effects.
 - [Moonlit Grove](https://games-psi-ashy.vercel.app/games/moonlit-grove.html): Moonlit Grove is a fantasy survival browser game featuring an enchanted sanctuary, spellcasting, glowing particles, progressive enemy waves and original synth sound effects.
+- [Park Dash](https://games-psi-ashy.vercel.app/games/park-dash.html): Park Dash is an animated kids running racing game with four rival runners, lanes, jumps, stars, sprinting and a 1500-meter finish line. No cars or scooters.
+- [Serpent Studio](https://games-psi-ashy.vercel.app/games/serpent-studio.html): Serpent Studio offers Classic, Zen, 90-second Sprint and Maze modes, three speed settings, four skins, glowing graphics and separate mode high scores.
 
 ## Site
 - [Home](https://games-psi-ashy.vercel.app/): all games in one place
