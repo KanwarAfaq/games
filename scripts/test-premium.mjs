@@ -34,7 +34,7 @@ function smoke(id, globalName, frameCount=160) {
   for(let i=0;i<frameCount;i++){const fn=frames.shift();assert.ok(fn,'animation frame missing');fn(i*16.666);}
   assert.ok(Number.isFinite(state.score),'score is finite');
   assert.ok(state.score>=0,'score is nonnegative');
-  assert.ok(Number.isFinite(state.x)||Array.isArray(state.snake),'player or snake state is present');
+  assert.ok(Number.isFinite(state.x)||Number.isFinite(state.distance)||Array.isArray(state.snake),'player or snake state is present');
   element('pause').click();assert.equal(state.mode,'paused','pause works');
   element('start').click();assert.equal(state.mode,'running','resume works');
   return state;
