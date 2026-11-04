@@ -7,7 +7,7 @@
   const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
   const rand=(a,b)=>a+Math.random()*(b-a);
   const state={mode:'ready',x:0,vx:0,speed:0,meters:0,energy:100,combo:0,score:0,near:0,time:0,objects:[],particles:[],flash:0,shake:0,spawn:0,best:0,mute:false,boost:false,keys:{},touch:0,checkpoint:0};
-  try{state.best=Number(localStorage.getItem('arcade-aether-best'))||0;state.mute=localStorage.getItem('arcade-aether-mute')==='1';}catch{}
+  try{state.best=Number((localStorage.getItem('kanwar-arcade:best:aether-run')||localStorage.getItem('arcade-aether-best')))||0;state.mute=localStorage.getItem('arcade-aether-mute')==='1';}catch{}
   $('best').textContent=state.best.toLocaleString();
   const ac=window.AudioContext||window.webkitAudioContext;let audio=null;
   function sound(f=400,d=.12,type='sine',vol=.04,end=null){
@@ -28,7 +28,7 @@
     Object.assign(state,{mode:'running',x:0,vx:0,speed:240,meters:0,energy:100,combo:0,score:0,near:0,time:0,objects:[],particles:[],flash:0,shake:0,spawn:0,checkpoint:0});
     hideOverlay();sound(440,.13,'triangle',.05,660);sound(660,.3,'triangle',.05,990);sync();
   }
-  function end(){state.mode='over';state.boost=false;if(state.score>state.best){state.best=Math.floor(state.score);try{localStorage.setItem('arcade-aether-best',String(state.best));}catch{}}noiseBurst();sync();overlay('RUN COMPLETE','You traveled '+Math.floor(state.meters).toLocaleString()+' m · Final score '+Math.floor(state.score).toLocaleString()+' · Dodge the crimson barriers and collect cyan energy rings.','RACE AGAIN');}
+  function end(){state.mode='over';state.boost=false;if(state.score>state.best){state.best=Math.floor(state.score);try{localStorage.setItem('kanwar-arcade:best:aether-run',String(state.best));}catch{}}noiseBurst();sync();overlay('RUN COMPLETE','You traveled '+Math.floor(state.meters).toLocaleString()+' m · Final score '+Math.floor(state.score).toLocaleString()+' · Dodge the crimson barriers and collect cyan energy rings.','RACE AGAIN');}
   function pause(){if(state.mode==='running'){state.mode='paused';overlay('PAUSED','Your hovercraft is holding position. Resume when ready.','RESUME');}else if(state.mode==='paused'){state.mode='running';hideOverlay();}sync();}
   function play(){if(state.mode==='paused')pause();else reset();}
   $('start').addEventListener('click',play);$('pause').addEventListener('click',pause);

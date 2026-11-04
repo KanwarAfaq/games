@@ -170,7 +170,7 @@ A: No. It needs a keyboard, so it works best on a desktop or laptop in a current
 
 ## Starfall Protocol (3D shooter)
 URL: https://games-psi-ashy.vercel.app/games/starfall-protocol.html
-Starfall Protocol is a free 3D top-down shooter for your browser. Activate the orbital relay, clear the hostiles, dodge fire with a dash and take down the Reactor Sentinel.
+Starfall Protocol is a free 3D top-down shooter for your browser. Restore the relay, clear the hostiles and take down the Reactor Sentinel.
 Controls: Move with WASD, aim with the mouse, click to fire, press Q to dash, 1 to 3 to switch weapons and hold E at the terminal.
 Starfall Protocol needs a keyboard and mouse, so it is built for desktop and laptop browsers.
 - WASD: Move
@@ -205,7 +205,7 @@ A: Yes. The game has touch steering and boost controls.
 
 ## Moonlit Grove (Fantasy survival)
 URL: https://games-psi-ashy.vercel.app/games/moonlit-grove.html
-Moonlit Grove is a fantasy survival browser game featuring an enchanted sanctuary, spellcasting, glowing particles, progressive enemy waves and original synth sound effects.
+Moonlit Grove is a free fantasy survival browser game. Cast spells, dash past shadows and defend an enchanted sanctuary through rising waves.
 Controls: Move with WASD or arrows, aim with the pointer and dash with Space or Shift. Touch controls included.
 undefined
 

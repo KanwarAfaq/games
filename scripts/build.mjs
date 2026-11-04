@@ -355,7 +355,7 @@ const GAMES = [
     accent: 'var(--lilac)',
     genre: '3D shooter',
     tagline: 'Restore the relay, clear the station, destroy the Sentinel.',
-    description: 'Starfall Protocol is a free 3D top-down shooter for your browser. Activate the orbital relay, clear the hostiles, dodge fire with a dash and take down the Reactor Sentinel.',
+    description: 'Starfall Protocol is a free 3D top-down shooter for your browser. Restore the relay, clear the hostiles and take down the Reactor Sentinel.',
     controls: 'Move with WASD, aim with the mouse, click to fire, press Q to dash, 1 to 3 to switch weapons and hold E at the terminal.',
     keys: [
       ['<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>', 'Move'],
@@ -382,7 +382,7 @@ const GAMES = [
     name: 'Aether Run',
     page: 'games/aether-run.html',
     thumb: 'assets/img/thumb-aether-run.svg',
-    og: 'assets/img/og-starfall.png',
+    og: 'assets/img/og-aether-run.jpg',
     genre: 'Neon hover racer',
     accent: 'var(--mint)',
     tagline: 'Race a luminous skyline in your own antigravity craft.',
@@ -396,17 +396,17 @@ const GAMES = [
     name: 'Moonlit Grove',
     page: 'games/moonlit-grove.html',
     thumb: 'assets/img/thumb-moonlit-grove.svg',
-    og: 'assets/img/og-serpentine.png',
+    og: 'assets/img/og-moonlit-grove.jpg',
     genre: 'Fantasy survival',
     accent: 'var(--mint)',
     tagline: 'Protect an enchanted sanctuary against the rising shadows.',
-    description: 'Moonlit Grove is a fantasy survival browser game featuring an enchanted sanctuary, spellcasting, glowing particles, progressive enemy waves and original synth sound effects.',
+    description: 'Moonlit Grove is a free fantasy survival browser game. Cast spells, dash past shadows and defend an enchanted sanctuary through rising waves.',
     controls: 'Move with WASD or arrows, aim with the pointer and dash with Space or Shift. Touch controls included.',
     faq: [['How do you play Moonlit Grove?', 'Move through the enchanted grove, aim with the mouse or touch, cast automatic spells and dash away from shadow enemies.'], ['Is Moonlit Grove free?', 'Yes, it runs entirely in your browser with no installation.']],
   },
   {
     id: 'park-dash', kind: 'bespoke', name: 'Park Dash',
-    page: 'games/park-dash.html', thumb: 'assets/img/thumb-park-dash.svg', og: 'assets/img/og-skyhop.png',
+    page: 'games/park-dash.html', thumb: 'assets/img/thumb-park-dash.svg', og: 'assets/img/og-park-dash.jpg',
     genre: 'Kids running race', accent: 'var(--butter)',
     tagline: 'Race three cheerful kids on foot through a colorful park grand prix.',
     description: 'Park Dash is an animated kids running racing game with four rival runners, lanes, jumps, stars, sprinting and a 1500-meter finish line. No cars or scooters.',
@@ -415,7 +415,7 @@ const GAMES = [
   },
   {
     id: 'serpent-studio', kind: 'bespoke', name: 'Serpent Studio',
-    page: 'games/serpent-studio.html', thumb: 'assets/img/thumb-serpent-studio.svg', og: 'assets/img/og-serpentine.png',
+    page: 'games/serpent-studio.html', thumb: 'assets/img/thumb-serpent-studio.svg', og: 'assets/img/og-serpent-studio.jpg',
     genre: 'Customizable snake', accent: 'var(--mint)',
     tagline: 'Four snake modes, three speeds and four glowing skins.',
     description: 'Serpent Studio offers Classic, Zen, 90-second Sprint and Maze modes, three speed settings, four skins, glowing graphics and separate mode high scores.',
@@ -747,7 +747,7 @@ ${cards}
   return shell({
     file: 'index.html',
     title: SITE.name,
-    description: `Play ${GAMES.length} free browser games, from arcade shooters and puzzles to the 3D adventure Lumenfall, the racer Neon Velocity and the shooter Starfall Protocol. No downloads, no sign-up.`,
+    description: `Play ${GAMES.length} free browser games: arcade shooters, puzzles, racers and 3D adventures. No downloads, no sign-up, scores saved on your device.`,
     active: 'home',
     body,
     scripts: ['assets/js/hero.js'],
@@ -924,6 +924,74 @@ function externalGamePage(game, next) {
     image: game.og,
     graph: gameGraph(game),
   });
+}
+
+
+// Hand-built games keep their own look. Their markup lives in scripts/bespoke/<id>.html;
+// the generator wraps it with the shared SEO head, site navigation, FAQ and footer.
+function bespokePage(game) {
+  const src = readFileSync(new URL(`./bespoke/${game.id}.html`, import.meta.url), 'utf8');
+  const main = src.match(/<main class="wrap">[\s\S]*?<\/main>/)[0].replace(/<\/main>$/, '</main>');
+  const scripts = [...src.matchAll(/<script defer src="\.\.\/([^"]+)"><\/script>/g)].map((m) => m[1]);
+  const file = game.page;
+  const url = pageUrl(file);
+  const title = `${game.heading || game.name}: free browser game | ${SITE.name}`;
+  const desc = esc(game.description);
+  const img = abs(game.og);
+  const others = GAMES.filter((g) => g.id !== game.id);
+  const faq = game.faq || [];
+  const graph = [
+    ORG, WEBSITE, gameLd(game),
+    crumbs([['Home', `${SITE.url}/`], ['Games', `${SITE.url}/#games`], [game.name, url]]),
+    ...(faq.length ? [faqLd(faq)] : []),
+  ];
+  const asset = (path) => `../${path}?v=${ver(path)}`;
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(title)}</title>
+<meta name="description" content="${desc}">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="${SITE.author}">
+<meta name="theme-color" content="#070d20">
+<link rel="canonical" href="${url}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="${SITE.name}">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="${url}">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${desc}">
+<meta property="og:image" content="${img}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${desc}">
+<meta name="twitter:image" content="${img}">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/img/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="stylesheet" href="${asset('assets/css/premium-games.css')}">
+${ld(graph)}
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top"><a class="brand" href="../index.html">KANWAR<span> / </span>ARCADE</a><nav aria-label="Main">${NAV.map((n) => `<a href="../${n.href}">${n.label.toUpperCase()}</a>`).join('')}<a href="../index.html#games">ALL GAMES</a></nav></header>
+${main.replace('<main class="wrap">', '<main class="wrap" id="main">')}
+<section class="wrap site-extra" aria-label="More about ${esc(game.name)}">
+${faq.length ? `<div class="site-faq"><h2>${esc(game.name)} FAQ</h2>${faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div>` : ''}
+<div class="site-more"><h2>More games</h2><ul>${others.map((g) => `<li><a href="../${g.page}">${g.name}<small>${g.genre}</small></a></li>`).join('')}</ul></div>
+</section>
+<footer class="site-foot"><div><a href="../index.html">Home</a> · <a href="../contact.html">Contact</a> · <a href="${SITE.repo}">Source on GitHub</a> · <a href="../llms.txt">For AI assistants</a></div><p>© ${SITE.year} ${SITE.name}. Built by ${SITE.author}. Your scores never leave this device.</p></footer>
+<script src="${asset('assets/js/site.js')}" defer></script>
+${scripts.map((s) => `<script src="${asset(s)}" defer></script>`).join('\n')}
+</body>
+</html>
+`;
 }
 
 function contactPage() {
@@ -1216,7 +1284,7 @@ const pages = {
 };
 GAMES.forEach((g, i) => {
   const next = GAMES[(i + 1) % GAMES.length];
-  if (g.kind !== 'bespoke') pages[g.page] = g.kind === 'external' ? externalGamePage(g, next) : gamePage(g, next);
+  pages[g.page] = g.kind === 'bespoke' ? bespokePage(g) : g.kind === 'external' ? externalGamePage(g, next) : gamePage(g, next);
 });
 
 for (const [file, content] of Object.entries(pages)) {
