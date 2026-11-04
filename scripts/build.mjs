@@ -253,6 +253,24 @@ const GAMES = [
     controls: 'Move with WASD or arrows, aim with the pointer and dash with Space or Shift. Touch controls included.',
     faq: [['How do you play Moonlit Grove?', 'Move through the enchanted grove, aim with the mouse or touch, cast automatic spells and dash away from shadow enemies.'], ['Is Moonlit Grove free?', 'Yes, it runs entirely in your browser with no installation.']],
   },
+  {
+    id: 'park-dash', kind: 'bespoke', name: 'Park Dash',
+    page: 'games/park-dash.html', thumb: 'assets/img/thumb-park-dash.svg', og: 'assets/img/og-skyhop.png',
+    genre: 'Kids running race', accent: 'var(--butter)',
+    tagline: 'Race three cheerful kids on foot through a colorful park grand prix.',
+    description: 'Park Dash is an animated kids running racing game with four rival runners, lanes, jumps, stars, sprinting and a 1500-meter finish line. No cars or scooters.',
+    controls: 'Use arrows or A/D to change lanes, Space to jump, Shift to sprint. Touch controls included.',
+    faq: [['How do you play Park Dash?', 'Race on foot against three kid rivals. Jump hurdles, dodge puddles, collect stars and sprint to the finish.'], ['Are there cars or scooters?', 'No. Park Dash is only a running race between kids on foot.']],
+  },
+  {
+    id: 'serpent-studio', kind: 'bespoke', name: 'Serpent Studio',
+    page: 'games/serpent-studio.html', thumb: 'assets/img/thumb-serpent-studio.svg', og: 'assets/img/og-serpentine.png',
+    genre: 'Customizable snake', accent: 'var(--mint)',
+    tagline: 'Four snake modes, three speeds and four glowing skins.',
+    description: 'Serpent Studio offers Classic, Zen, 90-second Sprint and Maze modes, three speed settings, four skins, glowing graphics and separate mode high scores.',
+    controls: 'Choose Classic, Zen, Sprint or Maze; steer with arrows, WASD or swipes. Customize speed and appearance.',
+    faq: [['What modes does Serpent Studio offer?', 'Classic, Zen with wraparound, timed Sprint and Maze obstacles.'], ['Can I customize difficulty and colors?', 'Yes, choose three speeds and four skins before starting.']],
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -293,7 +311,7 @@ const WEBSITE = {
   '@id': `${SITE.url}/#website`,
   url: `${SITE.url}/`,
   name: SITE.name,
-  description: 'Free browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lumenfall, Aether Run and Moonlit Grove.',
+  description: 'Nine free browser games: Park Dash, Serpent Studio, Aether Run, Moonlit Grove, Starfall, Brick Rally, Serpentine, Skyhop and Lumenfall.',
   inLanguage: 'en',
   publisher: { '@id': `${SITE.url}/#org` },
 };
@@ -473,11 +491,11 @@ const faqHtml = (faq, title = 'Frequently asked questions') =>
         </section>`;
 
 const HOME_FAQ = [
-  ['What is Kanwar Arcade?', 'Kanwar Arcade is a free collection of seven browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lumenfall, Aether Run and Moonlit Grove. They run on any modern device with no download, no account and no ads.'],
+  ['What is Kanwar Arcade?', 'Kanwar Arcade is a free collection of nine browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lumenfall, Aether Run, Moonlit Grove, Park Dash and Serpent Studio. They run on any modern device with no download, no account and no ads.'],
   ['Are the games really free?', 'Yes. Every game is free, there are no in-app purchases and nothing to install.'],
-  ['Do the games work on a phone?', 'Starfall, Brick Rally, Serpentine, Skyhop, Aether Run and Moonlit Grove work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.'],
+  ['Do the games work on a phone?', 'Starfall, Brick Rally, Serpentine, Skyhop, Aether Run, Moonlit Grove, Park Dash and Serpent Studio work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.'],
   ['Where are my high scores saved?', 'Best scores are saved in your own browser with local storage. They never leave your device and there is no account to make.'],
-  ['Which game should I try first?', 'Try Aether Run for neon racing, Moonlit Grove for magical survival, Starfall for action, and Lumenfall for 3D adventure.'],
+  ['Which game should I try first?', 'Try Park Dash for kids running, Serpent Studio for customizable snake, Aether Run for neon racing, or Moonlit Grove for fantasy survival.'],
 ];
 
 function homePage() {
@@ -499,6 +517,17 @@ function homePage() {
         </article>`
   ).join('\n');
 
+  // Dashboard priority: feature all four new titles before the complete game grid.
+  const featuredIds = ['park-dash', 'serpent-studio', 'aether-run', 'moonlit-grove'];
+  const featuredCards = featuredIds.map((id) => {
+    const game = GAMES.find(g => g.id === id);
+    return '<article class="game-card" style="--accent:'+game.accent+'">' +
+      '<a class="game-card__media" href="'+game.page+'"><img src="'+game.thumb+'" alt="'+game.name+' cover" width="640" height="400"></a>' +
+      '<div class="game-card__body"><span class="tag">NEW · '+game.genre+'</span>' +
+      '<h3><a href="'+game.page+'">'+game.name+'</a></h3><p>'+game.tagline+'</p>' +
+      '<p class="game-card__controls">'+game.controls+'</p><div class="game-card__foot">' +
+      '<a class="btn" href="'+game.page+'">Play '+game.name+'</a></div></div></article>';
+  }).join('\n');
   const body = `      <section class="hero" aria-labelledby="hero-title">
         <div class="hero__inner">
           <div class="hero__copy">
@@ -506,7 +535,7 @@ function homePage() {
               <span class="hero__line"><span>Pick a game.</span></span>
               <span class="hero__line"><span>Beat your best.</span></span>
             </h1>
-            <p class="hero__lede">Seven free games that run right in your browser: a space shooter, a brick breaker, a snake game, a one-tap flyer, a 3D adventure, a neon hover racer and a fantasy survival arena. No downloads, no sign-up, and your best scores stay on this device.</p>
+            <p class="hero__lede">Nine free games including kids foot racing, four-mode snake, neon hover racing, fantasy survival and classic arcade favorites. No downloads, no sign-up, and your best scores stay on this device.</p>
             <div class="hero__actions">
               <a class="btn" href="games/starfall.html">Play Starfall</a>
               <a class="btn btn--ghost" href="games/lumenfall.html">Explore Lumenfall in 3D</a>
@@ -519,9 +548,15 @@ function homePage() {
         </div>
       </section>
 
+      <section class="section" id="featured" aria-labelledby="featured-title">
+        <div class="container"><h2 class="section__title" id="featured-title">Featured · four new experiences</h2>
+        <p style="margin:0 0 1.5rem;color:var(--muted)">Kids foot racing, customizable snake, futuristic racing and magical survival.</p>
+        <div class="game-grid">${featuredCards}</div></div>
+      </section>
+
       <section class="section" id="games" aria-labelledby="games-title">
         <div class="container">
-          <h2 class="section__title" id="games-title">Choose your game</h2>
+          <h2 class="section__title" id="games-title">All nine games</h2>
           <div class="game-grid">
 ${cards}
           </div>
@@ -561,7 +596,7 @@ ${cards}
   return shell({
     file: 'index.html',
     title: SITE.name,
-    description: 'Play seven free browser games, including Aether Run, Moonlit Grove, Starfall and the 3D adventure Lumenfall. No downloads, no sign-up.',
+    description: 'Play nine free browser games, including Park Dash, Serpent Studio, Aether Run, Moonlit Grove and more. No downloads.',
     active: 'home',
     body,
     scripts: ['assets/js/hero.js'],
