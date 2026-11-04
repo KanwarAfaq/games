@@ -2,43 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://games-psi-ashy.vercel.app/</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-04</lastmod>
     <priority>1.0</priority>
     <image:image><image:loc>https://games-psi-ashy.vercel.app/assets/img/og-home.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://games-psi-ashy.vercel.app/games/starfall.html</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-04</lastmod>
     <priority>0.9</priority>
     <image:image><image:loc>https://games-psi-ashy.vercel.app/assets/img/og-starfall.png</image:loc><image:title>Starfall</image:title></image:image>
   </url>
   <url>
     <loc>https://games-psi-ashy.vercel.app/games/brick-rally.html</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-04</lastmod>
     <priority>0.9</priority>
     <image:image><image:loc>https://games-psi-ashy.vercel.app/assets/img/og-brick-rally.png</image:loc><image:title>Brick Rally</image:title></image:image>
   </url>
   <url>
     <loc>https://games-psi-ashy.vercel.app/games/serpentine.html</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-04</lastmod>
     <priority>0.9</priority>
     <image:image><image:loc>https://games-psi-ashy.vercel.app/assets/img/og-serpentine.png</image:loc><image:title>Serpentine</image:title></image:image>
   </url>
   <url>
     <loc>https://games-psi-ashy.vercel.app/games/skyhop.html</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-04</lastmod>
     <priority>0.9</priority>
     <image:image><image:loc>https://games-psi-ashy.vercel.app/assets/img/og-skyhop.png</image:loc><image:title>Skyhop</image:title></image:image>
   </url>
   <url>
     <loc>https://games-psi-ashy.vercel.app/games/lumenfall.html</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-04</lastmod>
     <priority>0.9</priority>
     <image:image><image:loc>https://games-psi-ashy.vercel.app/assets/img/og-lumenfall.jpg</image:loc><image:title>Lumenfall</image:title></image:image>
   </url>
   <url>
+    <loc>https://games-psi-ashy.vercel.app/games/aether-run.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://games-psi-ashy.vercel.app/assets/img/og-starfall.png</image:loc><image:title>Aether Run</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://games-psi-ashy.vercel.app/games/moonlit-grove.html</loc>
+    <lastmod>2026-11-04</lastmod>
+    <priority>0.9</priority>
+    <image:image><image:loc>https://games-psi-ashy.vercel.app/assets/img/og-serpentine.png</image:loc><image:title>Moonlit Grove</image:title></image:image>
+  </url>
+  <url>
     <loc>https://games-psi-ashy.vercel.app/contact.html</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-04</lastmod>
     <priority>0.3</priority>
   </url>
 </urlset>

@@ -106,14 +106,42 @@ A: Lumenfall uses a keyboard and mouse with pointer lock, so it works best on a 
 Q: What do I need to run Lumenfall?
 A: A recent browser with WebGL 2. The first load downloads a few megabytes of game code and the character model.
 
+## Aether Run (Neon hover racer)
+URL: https://games-psi-ashy.vercel.app/games/aether-run.html
+Aether Run is a neon hover-racing browser game with a procedural skyline, glowing light trails, collectable energy rings, and atmospheric sound effects.
+Controls: Steer with A and D or arrows. Hold Shift to boost; mobile touch controls are included.
+undefined
+
+Tips:
+
+FAQ:
+Q: How do you play Aether Run?
+A: Steer around red barriers, collect blue energy rings and hold boost to go faster.
+Q: Is Aether Run playable on a phone?
+A: Yes. The game has touch steering and boost controls.
+
+## Moonlit Grove (Fantasy survival)
+URL: https://games-psi-ashy.vercel.app/games/moonlit-grove.html
+Moonlit Grove is a fantasy survival browser game featuring an enchanted sanctuary, spellcasting, glowing particles, progressive enemy waves and original synth sound effects.
+Controls: Move with WASD or arrows, aim with the pointer and dash with Space or Shift. Touch controls included.
+undefined
+
+Tips:
+
+FAQ:
+Q: How do you play Moonlit Grove?
+A: Move through the enchanted grove, aim with the mouse or touch, cast automatic spells and dash away from shadow enemies.
+Q: Is Moonlit Grove free?
+A: Yes, it runs entirely in your browser with no installation.
+
 ## General FAQ
 Q: What is Kanwar Arcade?
-A: Kanwar Arcade is a free collection of five browser games: Starfall, Brick Rally, Serpentine, Skyhop and Lumenfall. They run on any modern device with no download, no account and no ads.
+A: Kanwar Arcade is a free collection of seven browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lumenfall, Aether Run and Moonlit Grove. They run on any modern device with no download, no account and no ads.
 Q: Are the games really free?
 A: Yes. Every game is free, there are no in-app purchases and nothing to install.
 Q: Do the games work on a phone?
-A: Starfall, Brick Rally, Serpentine and Skyhop work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.
+A: Starfall, Brick Rally, Serpentine, Skyhop, Aether Run and Moonlit Grove work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.
 Q: Where are my high scores saved?
 A: Best scores are saved in your own browser with local storage. They never leave your device and there is no account to make.
 Q: Which game should I try first?
-A: Try Starfall for fast action, Skyhop for a one-tap challenge, Serpentine for a classic with a twist, and Lumenfall for a 3D adventure.
+A: Try Aether Run for neon racing, Moonlit Grove for magical survival, Starfall for action, and Lumenfall for 3D adventure.

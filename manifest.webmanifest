@@ -50,6 +50,14 @@
     {
       "name": "Lumenfall",
       "url": "/games/lumenfall.html"
+    },
+    {
+      "name": "Aether Run",
+      "url": "/games/aether-run.html"
+    },
+    {
+      "name": "Moonlit Grove",
+      "url": "/games/moonlit-grove.html"
     }
   ]
 }
