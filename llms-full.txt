@@ -134,14 +134,42 @@ A: Move through the enchanted grove, aim with the mouse or touch, cast automatic
 Q: Is Moonlit Grove free?
 A: Yes, it runs entirely in your browser with no installation.
 
+## Park Dash (Kids running race)
+URL: https://games-psi-ashy.vercel.app/games/park-dash.html
+Park Dash is an animated kids running racing game with four rival runners, lanes, jumps, stars, sprinting and a 1500-meter finish line. No cars or scooters.
+Controls: Use arrows or A/D to change lanes, Space to jump, Shift to sprint. Touch controls included.
+undefined
+
+Tips:
+
+FAQ:
+Q: How do you play Park Dash?
+A: Race on foot against three kid rivals. Jump hurdles, dodge puddles, collect stars and sprint to the finish.
+Q: Are there cars or scooters?
+A: No. Park Dash is only a running race between kids on foot.
+
+## Serpent Studio (Customizable snake)
+URL: https://games-psi-ashy.vercel.app/games/serpent-studio.html
+Serpent Studio offers Classic, Zen, 90-second Sprint and Maze modes, three speed settings, four skins, glowing graphics and separate mode high scores.
+Controls: Choose Classic, Zen, Sprint or Maze; steer with arrows, WASD or swipes. Customize speed and appearance.
+undefined
+
+Tips:
+
+FAQ:
+Q: What modes does Serpent Studio offer?
+A: Classic, Zen with wraparound, timed Sprint and Maze obstacles.
+Q: Can I customize difficulty and colors?
+A: Yes, choose three speeds and four skins before starting.
+
 ## General FAQ
 Q: What is Kanwar Arcade?
-A: Kanwar Arcade is a free collection of seven browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lumenfall, Aether Run and Moonlit Grove. They run on any modern device with no download, no account and no ads.
+A: Kanwar Arcade is a free collection of nine browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lumenfall, Aether Run, Moonlit Grove, Park Dash and Serpent Studio. They run on any modern device with no download, no account and no ads.
 Q: Are the games really free?
 A: Yes. Every game is free, there are no in-app purchases and nothing to install.
 Q: Do the games work on a phone?
-A: Starfall, Brick Rally, Serpentine, Skyhop, Aether Run and Moonlit Grove work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.
+A: Starfall, Brick Rally, Serpentine, Skyhop, Aether Run, Moonlit Grove, Park Dash and Serpent Studio work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.
 Q: Where are my high scores saved?
 A: Best scores are saved in your own browser with local storage. They never leave your device and there is no account to make.
 Q: Which game should I try first?
-A: Try Aether Run for neon racing, Moonlit Grove for magical survival, Starfall for action, and Lumenfall for 3D adventure.
+A: Try Park Dash for kids running, Serpent Studio for customizable snake, Aether Run for neon racing, or Moonlit Grove for fantasy survival.

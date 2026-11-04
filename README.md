@@ -1,16 +1,18 @@
 # Kanwar Arcade
 
-Seven free games that run in the browser, wrapped in a small static website.
+Nine free games that run in the browser, wrapped in a small static website.
 
 - **Starfall**: a vertical space shooter with waves, power-ups and a boss every fourth wave.
 - **Brick Rally**: a brick-breaker with five levels, power-ups and a streak multiplier.
 - **Serpentine**: a glowing snake game with combo fruit and rocks.
 - **Skyhop**: a one-tap flyer through a sky that changes from dawn to night.
+- **Park Dash**: a kids-only running race on foot (no vehicles), with animated rivals, hurdles, stars and sprinting.
+- **Serpent Studio**: four snake modes (Classic, Zen, Sprint, Maze), three speed settings and four neon skins.
 - **Aether Run**: a cinematic neon hover racer with energy management, speed boosts and a procedural skyline.
 - **Moonlit Grove**: an enchanted fantasy survival arena with spellcasting, enemies and wave progression.
 - **Lumenfall**: a 3D adventure (React, Three.js, Rapier). Source in `lumenfall/`, built output in `play/lumenfall/`.
 
-The 2D games and pages (including Aether Run and Moonlit Grove) have no framework, no build step and no dependencies. Vercel serves the repo root as-is.
+The 2D games and pages (including all four featured games) have no framework, no build step and no dependencies. Vercel serves the repo root as-is.
 
 ## Run locally
 
@@ -69,3 +71,12 @@ After deploying, submit `sitemap.xml` in Google Search Console and Bing Webmaste
 - `node scripts/build.mjs` regenerates the homepage, directory, structured data and sitemap, preserving bespoke game HTML. `node scripts/test-premium.mjs` smoke-tests both canvas engines and regenerated links.
 - The `premium-games.yml` workflow runs JavaScript syntax checks, page generation and deterministic gameplay smoke tests, then commits the static assets to the feature branch for Vercel.
 
+
+## New games and dashboard (November 2026)
+
+- **Park Dash**: `games/park-dash.html` — running race with four animated kid runners. Arrow keys / A-D change lanes; Space / W jump; Shift sprints. Touch controls supported.
+- **Serpent Studio**: `games/serpent-studio.html` — four selectable game modes, three speeds and four skins. Arrow keys / WASD or swipe to turn; best scores saved by mode and speed.
+- The homepage highlights **Park Dash, Serpent Studio, Aether Run and Moonlit Grove** in a featured section; all **nine games** also appear in the main dashboard grid and sidebar.
+- `node scripts/build.mjs` regenerates the dashboard, sidebar, metadata, sitemap and service worker without overwriting bespoke premium game pages.
+- `node scripts/test-premium.mjs` runs browser-independent Canvas game smoke tests for all four premium engines, including all snake modes.
+- `.github/workflows/premium-games.yml` verifies and commits generated site assets on the feature branch so the Vercel static deployment needs no build step.

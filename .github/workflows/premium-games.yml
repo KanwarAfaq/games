@@ -3,11 +3,16 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - feat/two-premium-arcade-games-20261104
+      - feat/kids-race-snake-studio-20261104
     paths:
       - 'assets/js/aether-run.js'
       - 'assets/js/moonlit-grove.js'
       - 'assets/js/site.js'
+      - 'assets/js/park-dash.js'
+      - 'assets/js/serpent-studio.js'
+      - 'games/park-dash.html'
+      - 'games/serpent-studio.html'
+      - 'assets/css/new-games.css'
       - 'games/aether-run.html'
       - 'games/moonlit-grove.html'
       - 'scripts/build.mjs'
@@ -35,6 +40,8 @@ jobs:
         run: |
           node --check assets/js/aether-run.js
           node --check assets/js/moonlit-grove.js
+          node --check assets/js/park-dash.js
+          node --check assets/js/serpent-studio.js
           node --check assets/js/site.js
           node --check scripts/build.mjs
           node --check scripts/test-premium.mjs
@@ -48,6 +55,6 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add index.html contact.html 404.html games sitemap.xml robots.txt llms.txt llms-full.txt manifest.webmanifest sw.js vercel.json
           if ! git diff --cached --quiet; then
-            git commit -m "build: regenerate seven-game arcade pages and discovery assets"
+            git commit -m "build: regenerate nine-game arcade dashboard and discovery files"
             git push origin HEAD:"$GITHUB_REF_NAME"
           fi
