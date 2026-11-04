@@ -85,6 +85,48 @@ A: Tap, click or press Space to flap. Fly through the gaps, collect stars and av
 Q: Is Skyhop free?
 A: Yes. It is free, runs in your browser and needs no download or sign-up.
 
+## Lightmerge (Puzzle game)
+URL: https://games-psi-ashy.vercel.app/games/lightmerge.html
+Lightmerge is a free 2048-style sliding puzzle for your browser. Merge matching tiles, chase combos and reach 2048. Play with arrow keys or swipe.
+Controls: Slide the tiles with the arrow keys, WASD or a swipe.
+Touch or mouse: swipe on the board to slide every tile.
+- ←→↑↓: Slide tiles
+- WASD: Slide tiles
+- Space: Start or resume
+- P: Pause
+- M: Mute
+- N: Music on or off
+Tips:
+- Keep your biggest tile in a corner and build a chain of smaller tiles beside it.
+- Stick to two or three directions. Sliding the opposite way can scatter your chain.
+- Every move adds a new tile, so merge often to keep room on the board.
+FAQ:
+Q: How do you play Lightmerge?
+A: Slide all tiles in one direction with the arrow keys, WASD or a swipe. When two tiles with the same number touch, they merge into one with double the value. Reach 2048 to win.
+Q: Is Lightmerge the same as 2048?
+A: It follows the same sliding-tile idea, with its own glowing look, sound and effects. Everything runs in your browser.
+
+## Driftrock (Asteroid shooter)
+URL: https://games-psi-ashy.vercel.app/games/driftrock.html
+Driftrock is a free neon asteroid shooter for your browser. Fly, shoot and survive waves of splitting rocks. Play with the keyboard, mouse or touch.
+Controls: Turn with A and D, thrust with W and shoot with Space.
+Mouse or touch: press and hold to aim and shoot. Hold farther from the ship to thrust.
+- AD or ←→: Turn
+- W or ↑: Thrust
+- Space: Shoot (hold)
+- P: Pause
+- M: Mute
+- N: Music on or off
+Tips:
+- Large rocks split into two medium ones, and medium rocks split into small, fast ones.
+- Your ship keeps drifting, so thrust in short bursts and use the screen edges to wrap around.
+- You earn an extra life every 5,000 points and a bonus for clearing each wave.
+FAQ:
+Q: How do you play Driftrock?
+A: Turn with A and D or the arrow keys, thrust with W and hold Space to shoot. Every rock you hit splits into smaller pieces. Clear them all to start the next wave.
+Q: Does Driftrock work on a phone?
+A: Yes. Press and hold on the screen to aim and fire, and hold away from the ship to thrust.
+
 ## Lumenfall (3D adventure)
 URL: https://games-psi-ashy.vercel.app/games/lumenfall.html
 Lumenfall is a free 3D adventure that runs in your browser. Explore Crystal Valley, fight enemies, find nine energy crystals and reach the final portal.
@@ -106,14 +148,55 @@ A: Lumenfall uses a keyboard and mouse with pointer lock, so it works best on a 
 Q: What do I need to run Lumenfall?
 A: A recent browser with WebGL 2. The first load downloads a few megabytes of game code and the character model.
 
+## Neon Velocity (3D racing game)
+URL: https://games-psi-ashy.vercel.app/games/neon-velocity.html
+Neon Velocity is a free 3D arcade racer for your browser. Pick a car, race three rivals over three laps, drift corners and burn your nitro.
+Controls: Steer with A and D, accelerate with W, drift with Space and use nitro with Shift.
+Neon Velocity needs a keyboard, so it is built for desktop and laptop browsers.
+- WASD: Drive
+- Space: Drift
+- Shift: Nitro boost
+- C: Change camera
+- Esc: Pause
+Tips:
+- Stay on the glowing road. Driving on the grass slows you right down.
+- Hold Space while turning to drift. Drift score builds the longer you slide at speed.
+- Save nitro for the straight after a corner, and avoid bumping rivals because it costs you speed.
+FAQ:
+Q: How do you play Neon Velocity?
+A: Press W to accelerate, steer with A and D, hold Space to drift and Shift for a nitro boost. Beat three rivals over the laps to finish first.
+Q: Can I play Neon Velocity on my phone?
+A: No. It needs a keyboard, so it works best on a desktop or laptop in a current browser.
+
+## Starfall Protocol (3D shooter)
+URL: https://games-psi-ashy.vercel.app/games/starfall-protocol.html
+Starfall Protocol is a free 3D top-down shooter for your browser. Activate the orbital relay, clear the hostiles, dodge fire with a dash and take down the Reactor Sentinel.
+Controls: Move with WASD, aim with the mouse, click to fire, press Q to dash, 1 to 3 to switch weapons and hold E at the terminal.
+Starfall Protocol needs a keyboard and mouse, so it is built for desktop and laptop browsers.
+- WASD: Move
+- Mouse: Aim and fire
+- Q: Dash
+- 123: Blaster, plasma, pulse
+- E: Hold to activate the relay
+- Esc: Pause
+Tips:
+- Walk to the amber terminal first and hold E. Enemies wake up as you get close, so clear a path first if it gets busy.
+- Dash with Q to slip through enemy fire. Your shield recharges when you stay out of danger.
+- Switch weapons to suit the fight. Plasma hits hard but drains energy, and the pulse gun spreads three shots.
+FAQ:
+Q: How do you play Starfall Protocol?
+A: Move with WASD and aim with the mouse. Hold E at the terminal to restore the relay, clear every hostile, then destroy the Reactor Sentinel.
+Q: Can I play Starfall Protocol on my phone?
+A: No. It needs a keyboard and mouse, so it works best on a desktop or laptop in a current browser.
+
 ## General FAQ
 Q: What is Kanwar Arcade?
-A: Kanwar Arcade is a free collection of five browser games: Starfall, Brick Rally, Serpentine, Skyhop and Lumenfall. They run on any modern device with no download, no account and no ads.
+A: Kanwar Arcade is a free collection of 9 browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lightmerge, Driftrock, Lumenfall, Neon Velocity, Starfall Protocol. They run in any modern browser with no download, no account and no ads.
 Q: Are the games really free?
 A: Yes. Every game is free, there are no in-app purchases and nothing to install.
 Q: Do the games work on a phone?
-A: Starfall, Brick Rally, Serpentine and Skyhop work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.
+A: Starfall, Brick Rally, Serpentine, Skyhop, Lightmerge, Driftrock work with touch as well as keyboard and mouse. Lumenfall and Neon Velocity and Starfall Protocol are 3D games that need a keyboard, so they are best on a desktop or laptop.
 Q: Where are my high scores saved?
 A: Best scores are saved in your own browser with local storage. They never leave your device and there is no account to make.
 Q: Which game should I try first?
-A: Try Starfall for fast action, Skyhop for a one-tap challenge, Serpentine for a classic with a twist, and Lumenfall for a 3D adventure.
+A: Try Starfall for fast action, Skyhop for a one-tap challenge, Lightmerge for a puzzle, Lumenfall for a 3D adventure, Neon Velocity for racing and Starfall Protocol for a 3D shooter.

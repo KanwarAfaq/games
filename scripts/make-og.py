@@ -12,7 +12,7 @@ IMG = os.path.join(ROOT, 'assets', 'img')
 INK, CLOUD, BUTTER, PINK, MINT, MUTED = '#0E0B2E', '#F4F2FF', '#FFD23F', '#FF6FC4', '#52F0B8', '#B6B1F2'
 
 PAGES = [
-    ('home', ['Free arcade games', 'in your browser'], ['Starfall, Brick Rally, Serpentine,', 'Skyhop and 3D Lumenfall.'], None, PINK),
+    ('home', ['Free arcade games', 'in your browser'], ['Starfall, Brick Rally, Serpentine,', 'Lightmerge and more, in 3D too.'], None, PINK),
     ('starfall', ['Starfall'], ['A free space shooter with waves,', 'power-ups and boss fights.'], 'thumb-starfall.svg', PINK),
     ('brick-rally', ['Brick Rally'], ['A free brick-breaker with five', 'levels and wild power-ups.'], 'thumb-brick-rally.svg', '#5A5CFF'),
     ('serpentine', ['Serpentine'], ['A smooth, glowing snake game', 'with combos and bonus fruit.'], 'thumb-serpentine.svg', MINT),

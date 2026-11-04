@@ -1,13 +1,17 @@
 # Kanwar Arcade
 
-> Free browser games by Kanwar Afaq. 5 games, no downloads, no accounts, no ads. Scores are saved only in the player's own browser.
+> Free browser games by Kanwar Afaq. 9 games, no downloads, no accounts, no ads. Scores are saved only in the player's own browser.
 
 ## Games
 - [Starfall](https://games-psi-ashy.vercel.app/games/starfall.html): Starfall is a free space shooter you can play in your browser. Dodge, shoot, grab power-ups and beat the boss.
 - [Brick Rally](https://games-psi-ashy.vercel.app/games/brick-rally.html): Brick Rally is a free brick-breaker you can play in your browser. Five levels, power-ups and a streak multiplier.
 - [Serpentine](https://games-psi-ashy.vercel.app/games/serpentine.html): Serpentine is a free snake game for your browser with smooth glowing graphics, combo fruit and rocks to dodge. Play with arrow keys or swipe.
 - [Skyhop](https://games-psi-ashy.vercel.app/games/skyhop.html): Skyhop is a free one-tap flying game for your browser. Flap through gaps, collect stars and fly from sunrise into the night.
+- [Lightmerge](https://games-psi-ashy.vercel.app/games/lightmerge.html): Lightmerge is a free 2048-style sliding puzzle for your browser. Merge matching tiles, chase combos and reach 2048. Play with arrow keys or swipe.
+- [Driftrock](https://games-psi-ashy.vercel.app/games/driftrock.html): Driftrock is a free neon asteroid shooter for your browser. Fly, shoot and survive waves of splitting rocks. Play with the keyboard, mouse or touch.
 - [Lumenfall](https://games-psi-ashy.vercel.app/games/lumenfall.html): Lumenfall is a free 3D adventure that runs in your browser. Explore Crystal Valley, fight enemies, find nine energy crystals and reach the final portal.
+- [Neon Velocity](https://games-psi-ashy.vercel.app/games/neon-velocity.html): Neon Velocity is a free 3D arcade racer for your browser. Pick a car, race three rivals over three laps, drift corners and burn your nitro.
+- [Starfall Protocol](https://games-psi-ashy.vercel.app/games/starfall-protocol.html): Starfall Protocol is a free 3D top-down shooter for your browser. Activate the orbital relay, clear the hostiles, dodge fire with a dash and take down the Reactor Sentinel.
 
 ## Site
 - [Home](https://games-psi-ashy.vercel.app/): all games in one place

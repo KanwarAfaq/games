@@ -1,7 +1,7 @@
 {
   "name": "Kanwar Arcade",
   "short_name": "Arcade",
-  "description": "Free browser games: Starfall, Brick Rally, Serpentine, Skyhop and Lumenfall.",
+  "description": "Free browser games: 2D arcade games plus 3D adventure and racing.",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
@@ -48,8 +48,24 @@
       "url": "/games/skyhop.html"
     },
     {
+      "name": "Lightmerge",
+      "url": "/games/lightmerge.html"
+    },
+    {
+      "name": "Driftrock",
+      "url": "/games/driftrock.html"
+    },
+    {
       "name": "Lumenfall",
       "url": "/games/lumenfall.html"
+    },
+    {
+      "name": "Neon Velocity",
+      "url": "/games/neon-velocity.html"
+    },
+    {
+      "name": "Starfall Protocol",
+      "url": "/games/starfall-protocol.html"
     }
   ]
 }

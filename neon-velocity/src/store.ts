@@ -28,6 +28,10 @@ type GameState = {
   elapsed: number
   driftScore: number
   paused: boolean
+  runId: number
+  finishPos: number
+  bestLap: number
+  record: boolean
   set: (patch: Partial<GameState>) => void
   startRace: () => void
   resetRace: () => void
@@ -35,8 +39,8 @@ type GameState = {
 
 export const useGame = create<GameState>((set) => ({
   screen: 'menu', carIndex: 0, trackIndex: 0, camera: 'chase', speed: 0, nitro: 100,
-  lap: 1, position: 3, elapsed: 0, driftScore: 0, paused: false,
+  lap: 1, position: 4, elapsed: 0, driftScore: 0, paused: false, runId: 0, finishPos: 4, bestLap: 0, record: false,
   set: (patch) => set(patch),
-  startRace: () => set({ screen: 'race', speed: 0, nitro: 100, lap: 1, position: 3, elapsed: 0, driftScore: 0, paused: false }),
-  resetRace: () => set({ screen: 'race', speed: 0, nitro: 100, lap: 1, position: 3, elapsed: 0, driftScore: 0, paused: false }),
+  startRace: () => set((s) => ({ screen: 'race', speed: 0, nitro: 100, lap: 1, position: 4, elapsed: 0, driftScore: 0, paused: false, runId: s.runId + 1 })),
+  resetRace: () => set((s) => ({ screen: 'race', speed: 0, nitro: 100, lap: 1, position: 4, elapsed: 0, driftScore: 0, paused: false, runId: s.runId + 1 })),
 }))

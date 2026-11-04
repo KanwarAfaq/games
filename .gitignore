@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+starfall-protocol/vite.config.js
+starfall-protocol/vite.config.d.ts
+neon-velocity/vite.config.js
+neon-velocity/vite.config.d.ts

@@ -193,6 +193,86 @@ const GAMES = [
     ],
   },
   {
+    id: 'lightmerge',
+    name: 'Lightmerge',
+    page: 'games/lightmerge.html',
+    thumb: 'assets/img/thumb-lightmerge.jpg',
+    og: 'assets/img/og-lightmerge.jpg',
+    script: 'assets/js/lightmerge.js',
+    accent: 'var(--pink)',
+    aspect: '1',
+    width: 548,
+    height: 548,
+    genre: 'Puzzle game',
+    tagline: 'Slide glowing tiles and merge your way to 2048.',
+    description: 'Lightmerge is a free 2048-style sliding puzzle for your browser. Merge matching tiles, chase combos and reach 2048. Play with arrow keys or swipe.',
+    controls: 'Slide the tiles with the arrow keys, WASD or a swipe.',
+    lives: false,
+    hud: [
+      { label: 'Moves', id: 'hud-moves', value: '0' },
+      { label: 'Top tile', id: 'hud-top', value: '2' },
+    ],
+    pipClass: '',
+    extraTool: '',
+    keys: [
+      ['<kbd>←</kbd><kbd>→</kbd><kbd>↑</kbd><kbd>↓</kbd>', 'Slide tiles'],
+      ['<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>', 'Slide tiles'],
+      ['<kbd>Space</kbd>', 'Start or resume'],
+      ['<kbd>P</kbd>', 'Pause'],
+      ['<kbd>M</kbd>', 'Mute'],
+      ['<kbd>N</kbd>', 'Music on or off'],
+    ],
+    pointerNote: 'Touch or mouse: swipe on the board to slide every tile.',
+    tips: [
+      'Keep your biggest tile in a corner and build a chain of smaller tiles beside it.',
+      'Stick to two or three directions. Sliding the opposite way can scatter your chain.',
+      'Every move adds a new tile, so merge often to keep room on the board.',
+    ],
+    faq: [
+      ['How do you play Lightmerge?', 'Slide all tiles in one direction with the arrow keys, WASD or a swipe. When two tiles with the same number touch, they merge into one with double the value. Reach 2048 to win.'],
+      ['Is Lightmerge the same as 2048?', 'It follows the same sliding-tile idea, with its own glowing look, sound and effects. Everything runs in your browser.'],
+    ],
+  },
+  {
+    id: 'driftrock',
+    name: 'Driftrock',
+    page: 'games/driftrock.html',
+    thumb: 'assets/img/thumb-driftrock.jpg',
+    og: 'assets/img/og-driftrock.jpg',
+    script: 'assets/js/driftrock.js',
+    accent: 'var(--cobalt)',
+    aspect: '1.333',
+    width: 720,
+    height: 540,
+    genre: 'Asteroid shooter',
+    tagline: 'Thrust, turn and blast rocks that split into pieces.',
+    description: 'Driftrock is a free neon asteroid shooter for your browser. Fly, shoot and survive waves of splitting rocks. Play with the keyboard, mouse or touch.',
+    controls: 'Turn with A and D, thrust with W and shoot with Space.',
+    hud: [
+      { label: 'Wave', id: 'hud-wave', value: '1' },
+    ],
+    pipClass: '',
+    extraTool: '',
+    keys: [
+      ['<kbd>A</kbd><kbd>D</kbd> or <kbd>←</kbd><kbd>→</kbd>', 'Turn'],
+      ['<kbd>W</kbd> or <kbd>↑</kbd>', 'Thrust'],
+      ['<kbd>Space</kbd>', 'Shoot (hold)'],
+      ['<kbd>P</kbd>', 'Pause'],
+      ['<kbd>M</kbd>', 'Mute'],
+      ['<kbd>N</kbd>', 'Music on or off'],
+    ],
+    pointerNote: 'Mouse or touch: press and hold to aim and shoot. Hold farther from the ship to thrust.',
+    tips: [
+      'Large rocks split into two medium ones, and medium rocks split into small, fast ones.',
+      'Your ship keeps drifting, so thrust in short bursts and use the screen edges to wrap around.',
+      'You earn an extra life every 5,000 points and a bonus for clearing each wave.',
+    ],
+    faq: [
+      ['How do you play Driftrock?', 'Turn with A and D or the arrow keys, thrust with W and hold Space to shoot. Every rock you hit splits into smaller pieces. Clear them all to start the next wave.'],
+      ['Does Driftrock work on a phone?', 'Yes. Press and hold on the screen to aim and fire, and hold away from the ship to thrust.'],
+    ],
+  },
+  {
     id: 'lumenfall',
     kind: 'external',
     name: 'Lumenfall',
@@ -200,6 +280,8 @@ const GAMES = [
     play: 'play/lumenfall/',
     thumb: 'assets/img/thumb-lumenfall.jpg',
     poster: 'assets/img/poster-lumenfall.jpg',
+    posterAlt: 'Lumenfall: a hero with a glowing sword in Crystal Valley, with floating energy crystals',
+    heading: 'Lumenfall: The Lost Realm',
     og: 'assets/img/og-lumenfall.jpg',
     accent: 'var(--mint)',
     genre: '3D adventure',
@@ -223,6 +305,75 @@ const GAMES = [
     faq: [
       ['Can I play Lumenfall on my phone?', 'Lumenfall uses a keyboard and mouse with pointer lock, so it works best on a desktop or laptop in a current browser.'],
       ['What do I need to run Lumenfall?', 'A recent browser with WebGL 2. The first load downloads a few megabytes of game code and the character model.'],
+    ],
+  },
+  {
+    id: 'neon-velocity',
+    kind: 'external',
+    name: 'Neon Velocity',
+    page: 'games/neon-velocity.html',
+    play: 'play/neon-velocity/',
+    thumb: 'assets/img/thumb-neon-velocity.jpg',
+    poster: 'assets/img/poster-neon-velocity.jpg',
+    posterAlt: 'Neon Velocity: a car races down a glowing night road in the rain past three rival cars',
+    heading: 'Neon Velocity: Night Run',
+    og: 'assets/img/og-neon-velocity.jpg',
+    accent: 'var(--pink)',
+    genre: '3D racing game',
+    tagline: 'Race rivals through a neon city at night.',
+    description: 'Neon Velocity is a free 3D arcade racer for your browser. Pick a car, race three rivals over three laps, drift corners and burn your nitro.',
+    controls: 'Steer with A and D, accelerate with W, drift with Space and use nitro with Shift.',
+    keys: [
+      ['<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>', 'Drive'],
+      ['<kbd>Space</kbd>', 'Drift'],
+      ['<kbd>Shift</kbd>', 'Nitro boost'],
+      ['<kbd>C</kbd>', 'Change camera'],
+      ['<kbd>Esc</kbd>', 'Pause'],
+    ],
+    pointerNote: 'Neon Velocity needs a keyboard, so it is built for desktop and laptop browsers.',
+    tips: [
+      'Stay on the glowing road. Driving on the grass slows you right down.',
+      'Hold Space while turning to drift. Drift score builds the longer you slide at speed.',
+      'Save nitro for the straight after a corner, and avoid bumping rivals because it costs you speed.',
+    ],
+    faq: [
+      ['How do you play Neon Velocity?', 'Press W to accelerate, steer with A and D, hold Space to drift and Shift for a nitro boost. Beat three rivals over the laps to finish first.'],
+      ['Can I play Neon Velocity on my phone?', 'No. It needs a keyboard, so it works best on a desktop or laptop in a current browser.'],
+    ],
+  },
+  {
+    id: 'starfall-protocol',
+    kind: 'external',
+    name: 'Starfall Protocol',
+    page: 'games/starfall-protocol.html',
+    play: 'play/starfall-protocol/',
+    thumb: 'assets/img/thumb-starfall-protocol.jpg',
+    poster: 'assets/img/poster-starfall-protocol.jpg',
+    posterAlt: 'Starfall Protocol: an armoured explorer fights through a glowing orbital corridor toward a reactor terminal',
+    heading: 'Starfall Protocol: Echo-9',
+    og: 'assets/img/og-starfall-protocol.jpg',
+    accent: 'var(--lilac)',
+    genre: '3D shooter',
+    tagline: 'Restore the relay, clear the station, destroy the Sentinel.',
+    description: 'Starfall Protocol is a free 3D top-down shooter for your browser. Activate the orbital relay, clear the hostiles, dodge fire with a dash and take down the Reactor Sentinel.',
+    controls: 'Move with WASD, aim with the mouse, click to fire, press Q to dash, 1 to 3 to switch weapons and hold E at the terminal.',
+    keys: [
+      ['<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>', 'Move'],
+      ['<kbd>Mouse</kbd>', 'Aim and fire'],
+      ['<kbd>Q</kbd>', 'Dash'],
+      ['<kbd>1</kbd><kbd>2</kbd><kbd>3</kbd>', 'Blaster, plasma, pulse'],
+      ['<kbd>E</kbd>', 'Hold to activate the relay'],
+      ['<kbd>Esc</kbd>', 'Pause'],
+    ],
+    pointerNote: 'Starfall Protocol needs a keyboard and mouse, so it is built for desktop and laptop browsers.',
+    tips: [
+      'Walk to the amber terminal first and hold E. Enemies wake up as you get close, so clear a path first if it gets busy.',
+      'Dash with Q to slip through enemy fire. Your shield recharges when you stay out of danger.',
+      'Switch weapons to suit the fight. Plasma hits hard but drains energy, and the pulse gun spreads three shots.',
+    ],
+    faq: [
+      ['How do you play Starfall Protocol?', 'Move with WASD and aim with the mouse. Hold E at the terminal to restore the relay, clear every hostile, then destroy the Reactor Sentinel.'],
+      ['Can I play Starfall Protocol on my phone?', 'No. It needs a keyboard and mouse, so it works best on a desktop or laptop in a current browser.'],
     ],
   },
 ];
@@ -265,7 +416,7 @@ const WEBSITE = {
   '@id': `${SITE.url}/#website`,
   url: `${SITE.url}/`,
   name: SITE.name,
-  description: 'Free browser games: Starfall, Brick Rally, Serpentine, Skyhop and Lumenfall.',
+  description: 'Free browser games: 2D arcade games plus 3D adventure and racing.',
   inLanguage: 'en',
   publisher: { '@id': `${SITE.url}/#org` },
 };
@@ -445,11 +596,11 @@ const faqHtml = (faq, title = 'Frequently asked questions') =>
         </section>`;
 
 const HOME_FAQ = [
-  ['What is Kanwar Arcade?', 'Kanwar Arcade is a free collection of five browser games: Starfall, Brick Rally, Serpentine, Skyhop and Lumenfall. They run on any modern device with no download, no account and no ads.'],
+  ['What is Kanwar Arcade?', `Kanwar Arcade is a free collection of ${GAMES.length} browser games: ${GAMES.map((g) => g.name).join(', ')}. They run in any modern browser with no download, no account and no ads.`],
   ['Are the games really free?', 'Yes. Every game is free, there are no in-app purchases and nothing to install.'],
-  ['Do the games work on a phone?', 'Starfall, Brick Rally, Serpentine and Skyhop work with touch as well as keyboard and mouse. Lumenfall is a 3D game that needs a keyboard and mouse, so it is best on a desktop or laptop.'],
+  ['Do the games work on a phone?', `${GAMES.filter((g) => g.kind !== 'external').map((g) => g.name).join(', ')} work with touch as well as keyboard and mouse. ${GAMES.filter((g) => g.kind === 'external').map((g) => g.name).join(' and ')} are 3D games that need a keyboard, so they are best on a desktop or laptop.`],
   ['Where are my high scores saved?', 'Best scores are saved in your own browser with local storage. They never leave your device and there is no account to make.'],
-  ['Which game should I try first?', 'Try Starfall for fast action, Skyhop for a one-tap challenge, Serpentine for a classic with a twist, and Lumenfall for a 3D adventure.'],
+  ['Which game should I try first?', 'Try Starfall for fast action, Skyhop for a one-tap challenge, Lightmerge for a puzzle, Lumenfall for a 3D adventure, Neon Velocity for racing and Starfall Protocol for a 3D shooter.'],
 ];
 
 function homePage() {
@@ -465,7 +616,7 @@ function homePage() {
             <p class="game-card__controls">${g.controls}</p>
             <div class="game-card__foot">
               <a class="btn" href="${g.page}">Play ${g.name}</a>
-              <span class="best" data-best="${g.id}" data-prefix="Your best: ">${g.kind === 'external' ? 'Collect nine crystals' : 'No score yet'}</span>
+              <span class="best" data-best="${g.id}" data-prefix="Your best: ">${g.kind === 'external' ? '3D game' : 'No score yet'}</span>
             </div>
           </div>
         </article>`
@@ -478,10 +629,10 @@ function homePage() {
               <span class="hero__line"><span>Pick a game.</span></span>
               <span class="hero__line"><span>Beat your best.</span></span>
             </h1>
-            <p class="hero__lede">Five free games that run right in your browser: a space shooter, a brick breaker, a snake game, a one-tap flyer and a 3D adventure. No downloads, no sign-up, and your best scores stay on this device.</p>
+            <p class="hero__lede">${GAMES.length} free games that run right in your browser: arcade shooters, puzzles, and 3D games: an adventure, a racer and a shooter. No downloads, no sign-up, and your best scores stay on this device.</p>
             <div class="hero__actions">
               <a class="btn" href="games/starfall.html">Play Starfall</a>
-              <a class="btn btn--ghost" href="games/lumenfall.html">Explore Lumenfall in 3D</a>
+              <a class="btn btn--ghost" href="games/neon-velocity.html">Race in Neon Velocity</a>
             </div>
           </div>
           <div class="hero__visual" aria-hidden="true">
@@ -533,7 +684,7 @@ ${cards}
   return shell({
     file: 'index.html',
     title: SITE.name,
-    description: 'Play five free browser games: Starfall, Brick Rally, Serpentine, Skyhop and the 3D adventure Lumenfall. No downloads, no sign-up.',
+    description: `Play ${GAMES.length} free browser games, from arcade shooters and puzzles to the 3D adventure Lumenfall, the racer Neon Velocity and the shooter Starfall Protocol. No downloads, no sign-up.`,
     active: 'home',
     body,
     scripts: ['assets/js/hero.js'],
@@ -681,9 +832,9 @@ function externalGamePage(game, next) {
       <section class="section section--game" aria-label="Play ${game.name}">
         <p class="notice">${game.name} is a 3D game for desktop and laptop browsers. You need a keyboard and mouse. The first load downloads a few megabytes.</p>
         <div class="poster" style="--accent: ${game.accent}">
-          <img src="../${game.poster}" alt="${game.name}: a hero with a glowing sword in Crystal Valley, with floating energy crystals" width="1280" height="720">
+          <img src="../${game.poster}" alt="${game.posterAlt || game.name}" width="1280" height="720">
           <div class="poster__cta">
-            <h2>${game.name}: The Lost Realm</h2>
+            <h2>${game.heading || game.name}</h2>
             <p>${game.controls}</p>
             <a class="btn" href="../${game.play}">Play ${game.name} now</a>
           </div>
@@ -892,7 +1043,7 @@ ${HOME_FAQ.map(([q, a]) => `Q: ${q}\nA: ${a}`).join('\n')}
 const manifest = () => JSON.stringify({
   name: SITE.name,
   short_name: 'Arcade',
-  description: 'Free browser games: Starfall, Brick Rally, Serpentine, Skyhop and Lumenfall.',
+  description: 'Free browser games: 2D arcade games plus 3D adventure and racing.',
   start_url: '/?source=pwa',
   scope: '/',
   display: 'standalone',

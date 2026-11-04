@@ -370,6 +370,8 @@
     starfall:   { bpm: 132, wave: 'sawtooth', root: 110, scale: [0, 3, 7, 10], pattern: [0, 2, 1, 3, 0, 2, 3, 1], bass: [0, 0, 3, 2] },
     'brick-rally': { bpm: 120, wave: 'square', root: 130.8, scale: [0, 4, 7, 9], pattern: [0, 1, 2, 1, 3, 2, 1, 0], bass: [0, 3, 2, 3] },
     serpentine: { bpm: 108, wave: 'triangle', root: 123.5, scale: [0, 2, 5, 7], pattern: [0, 1, 2, 3, 2, 1, 3, 2], bass: [0, 2, 0, 3] },
+    lightmerge: { bpm: 96, wave: 'sine', root: 130.8, scale: [0, 4, 7, 11], pattern: [0, 1, 2, 3, 1, 2, 0, 3], bass: [0, 2, 3, 1] },
+    driftrock:  { bpm: 118, wave: 'sawtooth', root: 98, scale: [0, 3, 5, 10], pattern: [0, 2, 3, 2, 1, 3, 2, 0], bass: [0, 0, 2, 3] },
     skyhop:     { bpm: 100, wave: 'sine', root: 146.8, scale: [0, 2, 4, 7], pattern: [0, 2, 3, 1, 2, 3, 1, 0], bass: [0, 0, 2, 3] }
   };
 

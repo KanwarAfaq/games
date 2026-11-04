@@ -4,6 +4,7 @@ import { Environment, OrbitControls, PerspectiveCamera, Stars, Text } from '@rea
 import * as THREE from 'three'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { cars, tracks, useGame, type CameraMode } from './store'
+import type { MutableRefObject } from 'react'
 
 type Vec = [number, number, number]
 
@@ -52,40 +53,146 @@ function Rain() {
   return <points ref={ref}><bufferGeometry><bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} /></bufferGeometry><pointsMaterial color="#83c6ff" size={.035} transparent opacity={.48} /></points>
 }
 
-function World({ trackId, speed, cameraMode, carIndex }: { trackId: string; speed: number; cameraMode: CameraMode; carIndex: number }) {
+type Sim = {
+  dist: number; x: number; speed: number; nitro: number; drift: number; lap: number; lapStart: number
+  lapTimes: number[]; elapsed: number; hitCd: number; shake: number; steer: number; done: boolean; tick: number
+  ai: { dist: number; x: number; speed: number; lane: number; ph: number }[]
+}
+type Ctl = { keys: Record<string, boolean>; go: boolean; paused: boolean }
+
+const LAP_LEN: Record<string, number> = { city: 1100, mountain: 1300, coast: 1300 }
+const AI_LOOK = [['#ff395f', '#ffb0be'], ['#51d3ff', '#d2f7ff'], ['#f5a640', '#ffe6b0']]
+
+function newSim(): Sim {
+  return {
+    dist: 0, x: 0, speed: 0, nitro: 100, drift: 0, lap: 1, lapStart: 0, lapTimes: [], elapsed: 0, hitCd: 0, shake: 0, steer: 0, done: false, tick: 0,
+    ai: [{ dist: 8, x: -1.8, speed: 0, lane: -1.8, ph: 0 }, { dist: 15, x: 1.7, speed: 0, lane: 1.7, ph: 2 }, { dist: 22, x: -1.2, speed: 0, lane: -1.2, ph: 4 }],
+  }
+}
+
+type Finish = { elapsed: number; position: number; bestLap: number; drift: number }
+
+function World({ trackId, cameraMode, carIndex, sim, ctl, laps, onFinish }: { trackId: string; cameraMode: CameraMode; carIndex: number; sim: Sim; ctl: MutableRefObject<Ctl>; laps: number; onFinish: (f: Finish) => void }) {
   const carRef = useRef<THREE.Group>(null)
-  const camera = useThree(s => s.camera)
+  const sceneRef = useRef<THREE.Group>(null)
+  const gateRef = useRef<THREE.Group>(null)
+  const aiRefs = useRef<(THREE.Group | null)[]>([])
+  const camera = useThree(s => s.camera) as THREE.PerspectiveCamera
   const playerCar = cars[carIndex]
-  useFrame((_, dt) => {
-    if (!carRef.current) return
-    carRef.current.position.z = THREE.MathUtils.lerp(carRef.current.position.z, Math.min(4, speed * .02), dt * 4)
-    carRef.current.rotation.z = THREE.MathUtils.lerp(carRef.current.rotation.z, Math.sin(performance.now() * .002) * speed * .0008, dt * 4)
-    const target = cameraMode === 'cockpit' ? new THREE.Vector3(0, 1.08, .1) : cameraMode === 'hood' ? new THREE.Vector3(0, .95, 1.7) : new THREE.Vector3(0, 3.3, 7.5)
-    target.applyMatrix4(carRef.current.matrixWorld)
-    camera.position.lerp(target, dt * 3)
-    camera.lookAt(new THREE.Vector3(0, .4, -10))
+  const L = LAP_LEN[trackId] ?? 1100
+
+  useFrame((_, dtRaw) => {
+    const s = sim, c = ctl.current, dt = Math.min(dtRaw, 0.05)
+    const k = c.keys
+    const steer = (k.d || k.arrowright ? 1 : 0) - (k.a || k.arrowleft ? 1 : 0)
+    if (c.go && !c.paused && !s.done) {
+      const car = cars[carIndex]
+      const accel = k.w || k.arrowup, brake = k.s || k.arrowdown
+      const boosting = !!k.shift && s.nitro > 0 && s.speed > 20
+      const offroad = Math.abs(s.x) > 4.1
+      const cap = (offroad ? 50 : car.top) + (boosting ? 28 : 0)
+      let acc = accel ? 10 + car.accel * 0.18 : -14
+      if (brake) acc -= 70
+      if (boosting) acc += 45
+      let next = s.speed + acc * dt
+      if (next > cap) next = Math.max(cap, s.speed - 30 * dt)
+      s.speed = THREE.MathUtils.clamp(next, 0, 200)
+      s.nitro = THREE.MathUtils.clamp(s.nitro + (boosting ? -28 : 6) * dt, 0, 100)
+      const drifting = !!k[' '] && s.speed > 40 && steer !== 0
+      const rate = (2 + car.grip * 0.02) * (0.3 + Math.min(1, s.speed / 60) * 0.7) * (drifting ? 1.35 : 1)
+      s.x += steer * rate * dt
+      if (Math.abs(s.x) > 5.4) { s.x = Math.sign(s.x) * 5.4; s.speed *= 1 - 0.8 * dt }
+      if (drifting) s.drift += s.speed * dt * 0.6
+      s.steer = THREE.MathUtils.lerp(s.steer, steer, dt * 8)
+      s.dist += s.speed * 0.277 * dt
+      s.elapsed += dt
+      s.hitCd = Math.max(0, s.hitCd - dt)
+      s.shake = Math.max(0, s.shake - dt)
+
+      s.ai.forEach((a, i) => {
+        const target = car.top * (0.8 + 0.05 * i) + THREE.MathUtils.clamp((s.dist - a.dist) * 0.25, -6, 8)
+        a.speed = THREE.MathUtils.lerp(a.speed, target, dt * 0.8)
+        a.dist += a.speed * 0.277 * dt
+        a.x = a.lane + Math.sin(s.elapsed * 0.6 + a.ph) * 0.7
+        const rel = a.dist - s.dist
+        if (s.hitCd <= 0 && Math.abs(rel) < 3.4 && Math.abs(a.x - s.x) < 1.55) {
+          s.speed *= 0.65; s.x += (s.x >= a.x ? 1 : -1) * 0.8; s.hitCd = 0.6; s.shake = 0.35
+        }
+      })
+
+      const lapNow = Math.floor(s.dist / L) + 1
+      if (lapNow > s.lap) {
+        s.lapTimes.push(s.elapsed - s.lapStart); s.lapStart = s.elapsed; s.lap = lapNow
+        if (s.lap > laps) {
+          s.done = true
+          const pos = 1 + s.ai.filter(a => a.dist > s.dist).length
+          onFinish({ elapsed: s.elapsed, position: pos, bestLap: Math.min(...s.lapTimes), drift: s.drift })
+        }
+      }
+      s.tick += dt
+      if (s.tick > 0.1) {
+        s.tick = 0
+        useGame.setState({
+          speed: s.speed, nitro: s.nitro, lap: Math.min(s.lap, laps), elapsed: s.elapsed, driftScore: s.drift,
+          position: 1 + s.ai.filter(a => a.dist > s.dist).length,
+        })
+      }
+    }
+
+    if (sceneRef.current) sceneRef.current.position.z = s.dist % 40
+    if (carRef.current) {
+      carRef.current.position.x = s.x
+      carRef.current.rotation.y = THREE.MathUtils.lerp(carRef.current.rotation.y, -s.steer * 0.16, dt * 6)
+      carRef.current.rotation.z = THREE.MathUtils.lerp(carRef.current.rotation.z, s.steer * 0.03, dt * 6)
+    }
+    s.ai.forEach((a, i) => {
+      const g = aiRefs.current[i]
+      if (!g) return
+      const rel = a.dist - s.dist
+      g.visible = rel > -14 && rel < 95
+      g.position.set(a.x, 0, -rel)
+    })
+    if (gateRef.current) {
+      const rel = s.lap * L - s.dist
+      gateRef.current.visible = rel > -10 && rel < 120
+      gateRef.current.position.z = -rel
+    }
+    const target = cameraMode === 'cockpit' ? new THREE.Vector3(s.x, 1.08, 0.1) : cameraMode === 'hood' ? new THREE.Vector3(s.x, 0.95, 1.7) : new THREE.Vector3(s.x * 0.75, 3.3, 7.5)
+    camera.position.lerp(target, Math.min(1, dt * (cameraMode === 'chase' ? 4 : 14)))
+    if (s.shake > 0) { camera.position.x += (Math.random() - 0.5) * 0.12; camera.position.y += (Math.random() - 0.5) * 0.1 }
+    camera.lookAt(s.x * 0.5, 0.4, -10)
+    const fov = 64 + Math.min(18, s.speed * 0.12) + (s.nitro < 99 && ctl.current.keys.shift ? 4 : 0)
+    if (Math.abs(camera.fov - fov) > 0.05) { camera.fov = THREE.MathUtils.lerp(camera.fov, fov, dt * 4); camera.updateProjectionMatrix() }
   })
+
   return <>
     <color attach="background" args={[trackId === 'city' ? '#070a1a' : trackId === 'mountain' ? '#19101c' : '#1b0d22']} />
     <fog attach="fog" args={[trackId === 'city' ? '#0b1230' : '#2a1727', 14, 65]} />
     <ambientLight intensity={trackId === 'city' ? .55 : .8} color={trackId === 'coast' ? '#ffc2a1' : '#8da7ff'} />
     <directionalLight position={[5, 10, 3]} intensity={3.5} color={trackId === 'city' ? '#7eabff' : '#ffd1a0'} castShadow shadow-mapSize={[1024, 1024]} />
     <Stars radius={50} depth={25} count={trackId === 'city' ? 900 : 1800} factor={1.2} saturation={0} fade speed={.2} />
-    <Road trackId={trackId} />
+    <group ref={sceneRef}><Road trackId={trackId} /></group>
     {trackId === 'coast' && <mesh position={[0, -1.8, -70]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[50, 200]} /><meshStandardMaterial color="#0b5264" metalness={.3} roughness={.35} /></mesh>}
     <group ref={carRef}><Car color={playerCar.color} accent={playerCar.accent} player position={[0, .34, 0]} /></group>
-    <Car color="#ff395f" accent="#ffb0be" position={[-1.8, .34, -5]} scale={.94} rotation={-.03} />
-    <Car color="#51d3ff" accent="#d2f7ff" position={[1.7, .34, -9]} scale={.9} rotation={.02} />
-    <Car color="#f5a640" accent="#ffe6b0" position={[-1.5, .34, -15]} scale={.86} />
+    {AI_LOOK.map(([c, a], i) => <group key={i} ref={el => { aiRefs.current[i] = el }}><Car color={c} accent={a} position={[0, .34, 0]} scale={.94 - i * .04} /></group>)}
+    <group ref={gateRef} visible={false}>
+      <mesh position={[-4.6, 2, 0]}><boxGeometry args={[.25, 4, .25]} /><meshBasicMaterial color="#ffffff" toneMapped={false} /></mesh>
+      <mesh position={[4.6, 2, 0]}><boxGeometry args={[.25, 4, .25]} /><meshBasicMaterial color="#ffffff" toneMapped={false} /></mesh>
+      <mesh position={[0, 4, 0]}><boxGeometry args={[9.4, .5, .25]} /><meshBasicMaterial color="#ff3c9c" toneMapped={false} /></mesh>
+      <mesh position={[0, .02, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[8.4, 1.2]} /><meshBasicMaterial color="#e9f6ff" transparent opacity={.55} /></mesh>
+    </group>
     {trackId === 'city' && <Rain />}
   </>
 }
 
-function Scene({ trackId, speed, cameraMode, carIndex }: { trackId: string; speed: number; cameraMode: CameraMode; carIndex: number }) {
-  return <Canvas shadows dpr={[1, 1.5]} gl={{ antialias: true }}>
-    <PerspectiveCamera makeDefault position={[0, 3.4, 8]} fov={64} />
-    <World trackId={trackId} speed={speed} cameraMode={cameraMode} carIndex={carIndex} />
-  </Canvas>
+function Scene(props: { trackId: string; cameraMode: CameraMode; carIndex: number; sim: Sim; ctl: MutableRefObject<Ctl>; laps: number; onFinish: (f: Finish) => void }) {
+  return <div className="scene-wrap">
+    <Canvas shadows dpr={[1, 1.5]} gl={{ antialias: true }}>
+      <PerspectiveCamera makeDefault position={[0, 3.4, 8]} fov={64} />
+      <World {...props} />
+      <EffectComposer><Bloom intensity={0.7} luminanceThreshold={0.7} mipmapBlur /></EffectComposer>
+    </Canvas>
+  </div>
 }
 
 function CornerMark() { return <div className="corner-mark"><span>NV</span><i>///</i></div> }
@@ -102,24 +209,61 @@ function Garage() {
 
 function TrackSelect() {
   const { trackIndex, set, carIndex } = useGame(); const track = tracks[trackIndex]
-  return <main className="selection-screen track-select"><Header title="RACE SELECT" back={() => set({ screen: 'menu' })} /><div className="track-content"><div className="track-copy"><p className="eyebrow">RACE ROUTE / 0{trackIndex + 1}</p><h1>{track.name}</h1><p>{track.description}</p><div className="track-specs"><span><b>{track.laps}</b> LAPS</span><span><b>{track.length}</b> DISTANCE</span><span><b>3:42</b> BEST TIME</span></div></div><div className="track-preview" style={{ '--track': track.tone } as React.CSSProperties}><div className="preview-sky" /><div className="preview-road" /><div className="preview-city" /><div className="preview-label">{track.location}</div></div><div className="track-tabs">{tracks.map((t, i) => <button className={i === trackIndex ? 'track-tab active' : 'track-tab'} key={t.id} onClick={() => set({ trackIndex: i })}><span>0{i + 1}</span>{t.name}</button>)}</div></div><div className="selection-footer"><button className="ghost-btn" onClick={() => set({ screen: 'garage' })}>← GARAGE</button><button className="primary-btn" onClick={() => { void carIndex; useGame.getState().startRace() }}>RACE NOW <span>↗</span></button></div></main>
+  return <main className="selection-screen track-select"><Header title="RACE SELECT" back={() => set({ screen: 'menu' })} /><div className="track-content"><div className="track-copy"><p className="eyebrow">RACE ROUTE / 0{trackIndex + 1}</p><h1>{track.name}</h1><p>{track.description}</p><div className="track-specs"><span><b>{track.laps}</b> LAPS</span><span><b>{track.length}</b> DISTANCE</span><span><b>{readBest(track.id) ? formatTime(readBest(track.id)) : '--:--'}</b> BEST TIME</span></div></div><div className="track-preview" style={{ '--track': track.tone } as React.CSSProperties}><div className="preview-sky" /><div className="preview-road" /><div className="preview-city" /><div className="preview-label">{track.location}</div></div><div className="track-tabs">{tracks.map((t, i) => <button className={i === trackIndex ? 'track-tab active' : 'track-tab'} key={t.id} onClick={() => set({ trackIndex: i })}><span>0{i + 1}</span>{t.name}</button>)}</div></div><div className="selection-footer"><button className="ghost-btn" onClick={() => set({ screen: 'garage' })}>← GARAGE</button><button className="primary-btn" onClick={() => { void carIndex; useGame.getState().startRace() }}>RACE NOW <span>↗</span></button></div></main>
 }
 
 function Header({ title, back }: { title: string; back: () => void }) { return <header className="app-header"><button className="brand-mini" onClick={back}><span>NV</span> NEON VELOCITY</button><span className="header-title">{title}</span><span className="header-right">ONLINE / LOCAL SAVE <i /></span></header> }
 
 function Speedometer({ speed, nitro }: { speed: number; nitro: number }) { return <div className="speedometer"><div className="speed-number">{Math.round(speed)}<small>KM/H</small></div><div className="speed-ring" style={{ '--fill': `${Math.min(speed / 1.2, 100)}%` } as React.CSSProperties} /><div className="nitro-meter"><span>NITRO</span><i><b style={{ width: `${nitro}%` }} /></i></div></div> }
 
+function bestKey(id: string) { return `neon-velocity:best:${id}` }
+function readBest(id: string): number { try { return Number(localStorage.getItem(bestKey(id))) || 0 } catch { return 0 } }
+
 function Race() {
-  const { trackIndex, carIndex, camera, speed, nitro, lap, position, elapsed, paused, set, resetRace } = useGame();
-  const [countdown, setCountdown] = useState(3); const [keys, setKeys] = useState<Record<string, boolean>>({});
-  useEffect(() => { const down=(e: KeyboardEvent)=>{setKeys(k=>({...k,[e.key.toLowerCase()]:true})); if(e.key.toLowerCase()==='c') set({camera: camera==='chase'?'hood':camera==='hood'?'cockpit':'chase'}); if(e.key==='Escape') set({paused:!paused})}; const up=(e: KeyboardEvent)=>setKeys(k=>({...k,[e.key.toLowerCase()]:false})); addEventListener('keydown',down); addEventListener('keyup',up); return()=>{removeEventListener('keydown',down);removeEventListener('keyup',up)} }, [camera, paused, set]);
-  useEffect(() => { const t = window.setTimeout(() => setCountdown(c => c > 0 ? c - 1 : 0), 850); return () => clearTimeout(t) }, [countdown]);
-  useEffect(() => { const t=window.setInterval(()=>{ const g=useGame.getState(); if(g.screen!=='race'||g.paused||countdown>0)return; const car=cars[carIndex]; const boosting=keys.shift&&g.nitro>0; const accel=keys.w||keys.arrowup; const brake=keys.s||keys.arrowdown; let next=g.speed+(accel?car.accel*.012: -1.5)-(brake?4:0); if(boosting) next+=3.2; next=THREE.MathUtils.clamp(next,0,boosting?120:100); const nextNitro=boosting?Math.max(0,g.nitro-1.8):Math.min(100,g.nitro+.22); const nextElapsed=g.elapsed+.1; if(nextElapsed>28){g.set({screen:'results',speed:next,nitro:nextNitro,elapsed:nextElapsed});return} g.set({speed:next,nitro:nextNitro,elapsed:nextElapsed,lap:Math.min(3,1+Math.floor(nextElapsed/10)),position:next>72?1:next>45?2:3,driftScore:g.driftScore+(keys[' ']&&next>40?.7:0)}); },100); return()=>clearInterval(t) }, [carIndex,countdown,keys]);
-  return <main className="race-screen"><Scene trackId={tracks[trackIndex].id} speed={speed} cameraMode={camera} carIndex={carIndex} /><div className="race-vignette" /><div className="race-hud"><div className="hud-top"><div><span className="hud-label">POSITION</span><strong>{position}<small>/ 04</small></strong></div><div className="lap"><span className="hud-label">LAP</span><strong>{lap}<small>/ {tracks[trackIndex].laps}</small></strong></div><div className="race-time"><span className="hud-label">TIME</span><strong>{formatTime(elapsed)}</strong></div></div><div className="hud-bottom"><div className="drift"><span>DRIFT SCORE</span><b>{Math.floor(useGame.getState().driftScore).toLocaleString()}</b></div><Speedometer speed={speed} nitro={nitro} /></div><div className="mini-map"><span>ROUTE 0{trackIndex + 1}</span><i /><i /><i /><b /></div><div className="race-controls">WASD <span>DRIVE</span> · SPACE <span>DRIFT</span> · SHIFT <span>NITRO</span> · C <span>CAMERA</span></div></div>{countdown>0&&<div className="countdown"><span>{countdown}</span><small>GET READY</small></div>}{paused&&<div className="pause-card"><p className="eyebrow">RACE PAUSED</p><h2>Take a breath.</h2><button className="primary-btn" onClick={()=>set({paused:false})}>RESUME <span>↗</span></button><button className="ghost-btn" onClick={resetRace}>RESTART RACE</button><button className="ghost-btn" onClick={()=>set({screen:'menu'})}>EXIT TO MENU</button></div>}</main>
+  const { trackIndex, carIndex, camera, speed, nitro, lap, position, elapsed, driftScore, paused, set, resetRace } = useGame()
+  const ctl = useRef<Ctl>({ keys: {}, go: false, paused: false })
+  const sim = useMemo(() => newSim(), [])
+  const [countdown, setCountdown] = useState(3)
+  const track = tracks[trackIndex]
+  ctl.current.paused = paused
+  ctl.current.go = countdown === 0
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase()
+      if (key.startsWith('arrow') || key === ' ') e.preventDefault()
+      ctl.current.keys[key] = true
+      const g = useGame.getState()
+      if (key === 'c' && !e.repeat) g.set({ camera: g.camera === 'chase' ? 'hood' : g.camera === 'hood' ? 'cockpit' : 'chase' })
+      if (key === 'escape' && !e.repeat) g.set({ paused: !g.paused })
+    }
+    const up = (e: KeyboardEvent) => { ctl.current.keys[e.key.toLowerCase()] = false }
+    const blur = () => { ctl.current.keys = {} }
+    addEventListener('keydown', down); addEventListener('keyup', up); addEventListener('blur', blur)
+    return () => { removeEventListener('keydown', down); removeEventListener('keyup', up); removeEventListener('blur', blur) }
+  }, [])
+  useEffect(() => {
+    if (countdown <= 0 || paused) return
+    const t = window.setTimeout(() => setCountdown(c => Math.max(0, c - 1)), 850)
+    return () => clearTimeout(t)
+  }, [countdown, paused])
+
+  const onFinish = (f: Finish) => {
+    const prev = readBest(track.id)
+    const record = prev === 0 || f.elapsed < prev
+    if (record) { try { localStorage.setItem(bestKey(track.id), String(f.elapsed)) } catch { /* storage unavailable */ } }
+    window.setTimeout(() => useGame.setState({ screen: 'results', elapsed: f.elapsed, finishPos: f.position, bestLap: f.bestLap, driftScore: f.drift, record }), 900)
+  }
+
+  return <main className="race-screen"><Scene trackId={track.id} cameraMode={camera} carIndex={carIndex} sim={sim} ctl={ctl} laps={track.laps} onFinish={onFinish} /><div className="race-vignette" /><div className="race-hud"><div className="hud-top"><div><span className="hud-label">POSITION</span><strong>{position}<small>/ 04</small></strong></div><div className="lap"><span className="hud-label">LAP</span><strong>{lap}<small>/ {track.laps}</small></strong></div><div className="race-time"><span className="hud-label">TIME</span><strong>{formatTime(elapsed)}</strong></div></div><div className="hud-bottom"><div className="drift"><span>DRIFT SCORE</span><b>{Math.floor(driftScore).toLocaleString()}</b></div><Speedometer speed={speed} nitro={nitro} /></div><div className="mini-map"><span>ROUTE 0{trackIndex + 1}</span><i /><i /><i /><b /></div><div className="race-controls">WASD <span>DRIVE</span> · SPACE <span>DRIFT</span> · SHIFT <span>NITRO</span> · C <span>CAMERA</span> · ESC <span>PAUSE</span></div></div>{countdown > 0 && <div className="countdown"><span>{countdown}</span><small>GET READY</small></div>}{paused && <div className="pause-card"><p className="eyebrow">RACE PAUSED</p><h2>Take a breath.</h2><button className="primary-btn" onClick={() => set({ paused: false })}>RESUME <span>↗</span></button><button className="ghost-btn" onClick={resetRace}>RESTART RACE</button><button className="ghost-btn" onClick={() => set({ screen: 'menu' })}>EXIT TO MENU</button></div>}</main>
 }
 
-function Results() { const {elapsed, trackIndex, carIndex, set, resetRace}=useGame(); return <main className="results-screen"><div className="results-grid" /><CornerMark /><div className="results-copy"><p className="eyebrow">RACE COMPLETE / 01</p><h1>YOU<br /><em>MADE IT.</em></h1><div className="result-line"><span>FINISH TIME</span><b>{formatTime(elapsed)}</b></div><div className="result-line"><span>BEST LAP</span><b>01:12.84</b></div><div className="result-line"><span>VEHICLE</span><b>{cars[carIndex].name}</b></div><button className="primary-btn" onClick={resetRace}>REPLAY RACE <span>↗</span></button><button className="ghost-btn" onClick={()=>set({screen:'tracks'})}>CHANGE TRACK</button><button className="ghost-btn" onClick={()=>set({screen:'menu'})}>MAIN MENU</button></div><div className="results-side"><span>TRACK / {tracks[trackIndex].name}</span><div className="trophy">★</div><p>NEW PERSONAL<br />MOMENTUM</p></div></main> }
+function Results() {
+  const { elapsed, trackIndex, carIndex, finishPos, bestLap, record, driftScore, set, resetRace } = useGame()
+  const ord = ['', '1ST', '2ND', '3RD', '4TH'][finishPos] || `${finishPos}TH`
+  return <main className="results-screen"><div className="results-grid" /><CornerMark /><div className="results-copy"><p className="eyebrow">RACE COMPLETE / {ord} PLACE</p><h1>{finishPos === 1 ? <>YOU<br /><em>WON.</em></> : <>YOU<br /><em>FINISHED {ord}.</em></>}</h1><div className="result-line"><span>FINISH TIME</span><b>{formatTime(elapsed)}</b></div><div className="result-line"><span>BEST LAP</span><b>{formatTime(bestLap)}</b></div><div className="result-line"><span>DRIFT SCORE</span><b>{Math.floor(driftScore).toLocaleString()}</b></div><div className="result-line"><span>VEHICLE</span><b>{cars[carIndex].name}</b></div><button className="primary-btn" onClick={resetRace}>REPLAY RACE <span>↗</span></button><button className="ghost-btn" onClick={() => set({ screen: 'tracks' })}>CHANGE TRACK</button><button className="ghost-btn" onClick={() => set({ screen: 'menu' })}>MAIN MENU</button></div><div className="results-side"><span>TRACK / {tracks[trackIndex].name}</span><div className="trophy">{finishPos === 1 ? '★' : '◆'}</div><p>{record ? <>NEW TRACK<br />RECORD</> : <>KEEP<br />PUSHING</>}</p></div></main>
+}
 
 function formatTime(seconds: number) { const m=Math.floor(seconds/60).toString().padStart(2,'0'); const s=Math.floor(seconds%60).toString().padStart(2,'0'); const ms=Math.floor((seconds%1)*100).toString().padStart(2,'0'); return `${m}:${s}.${ms}` }
 
-export default function App() { const screen=useGame(s=>s.screen); if(screen==='menu')return <Menu/>; if(screen==='garage')return <Garage/>; if(screen==='tracks')return <TrackSelect/>; if(screen==='race')return <Race/>; return <Results/> }
+export default function App() { const screen=useGame(s=>s.screen); const runId=useGame(s=>s.runId); if(screen==='menu')return <Menu/>; if(screen==='garage')return <Garage/>; if(screen==='tracks')return <TrackSelect/>; if(screen==='race')return <Race key={runId}/>; return <Results/> }
