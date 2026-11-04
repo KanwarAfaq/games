@@ -98,7 +98,7 @@ g.restore();}
 function draw(){g.save();if(S.shake)g.translate(rnd(-S.shake,S.shake),rnd(-S.shake,S.shake));paint();
 for(const it of S.items.sort((a,b)=>b.at-a.at))item(it);
 for(let i=1;i<heroes.length;i++){const h=heroes[i];let x=430+(h.dist-S.distance)*1.9;runner(cl(x,-80,1060),L[h.lane],h,S.t*(1.1+i*.09),0,.87);}
-runner(410,L[0]+(L[S.lane]-L[0]),heroes[0],S.t,Math.max(0,S.jump),1.13);
+runner(410,L[0]+(L[1]-L[0])*S.lane,heroes[0],S.t,Math.max(0,S.jump),1.13);
 for(const p of S.particles){g.globalAlpha=cl(p.life/p.total,0,1);rad(p.x,p.y,18,p.col,.6);g.fillStyle=p.col;g.beginPath();g.arc(p.x,p.y,p.r,0,TAU);g.fill();}g.globalAlpha=1;
 if(S.flash){g.fillStyle='rgba(255,92,98,'+(S.flash*.2)+')';g.fillRect(0,0,W,H);}
 g.fillStyle='rgba(18,51,65,.65)';g.fillRect(740,20,185,38);g.fillStyle='#fff';g.font='800 15px system-ui';g.fillText('FINISH '+Math.max(0,Math.ceil(FINISH-S.distance))+' m',757,45);
