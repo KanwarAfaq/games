@@ -36,6 +36,9 @@
   function setBoost(v){state.boost=v;}
   $('boost').addEventListener('pointerdown',e=>{e.preventDefault();setBoost(true);});
   ['pointerup','pointercancel','pointerleave'].forEach(t=>$('boost').addEventListener(t,()=>setBoost(false)));
+  const mobileBoost=$('mobile-boost');
+  mobileBoost.addEventListener('pointerdown',e=>{e.preventDefault();setBoost(true);});
+  for(const type of ['pointerup','pointercancel','pointerleave'])mobileBoost.addEventListener(type,()=>setBoost(false));
   function touchDir(dir){return e=>{e.preventDefault();state.touch=dir;};}
   $('left').addEventListener('pointerdown',touchDir(-1));$('right').addEventListener('pointerdown',touchDir(1));
   for(const el of [$('left'),$('right')])for(const t of ['pointerup','pointerleave','pointercancel'])el.addEventListener(t,()=>state.touch=0);
