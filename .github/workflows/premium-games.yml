@@ -1,0 +1,53 @@
+name: Build and verify premium arcade games
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feat/two-premium-arcade-games-20261104
+    paths:
+      - 'assets/js/aether-run.js'
+      - 'assets/js/moonlit-grove.js'
+      - 'assets/js/site.js'
+      - 'games/aether-run.html'
+      - 'games/moonlit-grove.html'
+      - 'scripts/build.mjs'
+      - 'scripts/test-premium.mjs'
+      - '.github/workflows/premium-games.yml'
+concurrency:
+  group: premium-arcade-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  build-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Refresh feature branch before generating assets
+        run: |
+          git fetch origin "$GITHUB_REF_NAME"
+          git reset --hard "origin/$GITHUB_REF_NAME"
+      - name: Validate JavaScript syntax
+        run: |
+          node --check assets/js/aether-run.js
+          node --check assets/js/moonlit-grove.js
+          node --check assets/js/site.js
+          node --check scripts/build.mjs
+          node --check scripts/test-premium.mjs
+      - name: Generate static HTML, library and discovery files
+        run: node scripts/build.mjs
+      - name: Gameplay and navigation smoke tests
+        run: node scripts/test-premium.mjs
+      - name: Commit generated files for static Vercel deployment
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add index.html contact.html 404.html games sitemap.xml robots.txt llms.txt llms-full.txt manifest.webmanifest sw.js vercel.json
+          if ! git diff --cached --quiet; then
+            git commit -m "build: regenerate seven-game arcade pages and discovery assets"
+            git push origin HEAD:"$GITHUB_REF_NAME"
+          fi

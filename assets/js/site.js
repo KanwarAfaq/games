@@ -38,7 +38,8 @@
   // Best scores are written by the games into localStorage.
   function readBest(id) {
     try {
-      var v = JSON.parse(window.localStorage.getItem('kanwar-arcade:best:' + id));
+      var key = id === 'aether-run' ? 'arcade-aether-best' : id === 'moonlit-grove' ? 'arcade-grove-best' : 'kanwar-arcade:best:' + id;
+      var v = JSON.parse(window.localStorage.getItem(key));
       return typeof v === 'number' ? v : 0;
     } catch (err) {
       return 0;
