@@ -13,6 +13,9 @@ on:
       - 'scripts/build.mjs'
       - 'scripts/test-premium.mjs'
       - '.github/workflows/premium-games.yml'
+concurrency:
+  group: premium-arcade-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
@@ -24,6 +27,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Refresh feature branch before generating assets
+        run: |
+          git fetch origin "$GITHUB_REF_NAME"
+          git reset --hard "origin/$GITHUB_REF_NAME"
       - name: Validate JavaScript syntax
         run: |
           node --check assets/js/aether-run.js
@@ -42,6 +49,5 @@ jobs:
           git add index.html contact.html 404.html games sitemap.xml robots.txt llms.txt llms-full.txt manifest.webmanifest sw.js vercel.json
           if ! git diff --cached --quiet; then
             git commit -m "build: regenerate seven-game arcade pages and discovery assets"
-            git pull --rebase origin "$GITHUB_REF_NAME"
             git push origin HEAD:"$GITHUB_REF_NAME"
           fi
