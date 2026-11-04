@@ -61,6 +61,7 @@ assert.ok(b.t>0,'survival timer advances');
 const park=smoke('park-dash','__parkDebug',20);
 assert.ok(park.distance>0,'kids foot race advances');
 assert.equal(park.mode,'running');
+
 const snake=smoke('serpent-studio','__serpentDebug',20);
 assert.ok(snake.snake.length>=4,'snake is alive with growing body');
 assert.ok(['classic','zen','sprint','maze'].includes(snake.variant),'valid snake mode');
@@ -75,6 +76,14 @@ for(const id of ['aether-run','moonlit-grove','park-dash','serpent-studio']){
 }
 const index=get('index.html');
 for(const id of ['aether-run','moonlit-grove','park-dash','serpent-studio'])assert.ok(index.includes('games/'+id+'.html'),'home listing '+id);
+const featuredPosition=index.indexOf('id="featured"');
+const libraryPosition=index.indexOf('id="games"');
+assert.ok(featuredPosition>0 && libraryPosition>featuredPosition,'four new games featured above complete dashboard');
+const featuredSection=index.slice(featuredPosition,libraryPosition);
+for(const id of ['park-dash','serpent-studio','aether-run','moonlit-grove']){
+  assert.ok(featuredSection.includes('games/'+id+'.html'),'featured game '+id);
+}
+assert.equal((index.match(/<article class="game-card"/g)||[]).length,13,'four feature cards plus nine library cards');
 const sitemap=get('sitemap.xml');
 for(const id of ['aether-run','moonlit-grove'])assert.ok(sitemap.includes('/games/'+id+'.html'),'sitemap listing '+id);
 console.log('Premium smoke: four game loops, start/pause/resume, scores, home links and sitemap passed.');
