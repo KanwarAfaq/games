@@ -37,6 +37,21 @@ function smoke(id, globalName, frameCount=160) {
   assert.ok(Number.isFinite(state.x)||Number.isFinite(state.distance)||Array.isArray(state.snake),'player or snake state is present');
   element('pause').click();assert.equal(state.mode,'paused','pause works');
   element('start').click();assert.equal(state.mode,'running','resume works');
+  if(id==='serpent-studio'){
+    for(const mode of ['classic','zen','sprint','maze']){
+      element('variant').value=mode;
+      element('difficulty').value='turbo';
+      element('skin').value='sakura';
+      handlers.get('variant:change')?.();
+      win.__serpentDebug.reset();
+      assert.equal(state.variant,mode,'snake mode selection');
+      assert.equal(state.difficulty,'turbo','snake speed setting');
+      assert.equal(state.skin,'sakura','snake appearance setting');
+      assert.equal(state.rocks.length>0,mode==='maze','maze obstacles');
+      win.__serpentDebug.update(.02);
+      assert.ok(Number.isFinite(state.score),'mode score remains finite');
+    }
+  }
   return state;
 }
 const a=smoke('aether-run','__aetherDebug');
