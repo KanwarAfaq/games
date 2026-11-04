@@ -907,9 +907,9 @@ URL: ${abs(g.page)}
 ${g.description}
 Controls: ${g.controls}
 ${g.pointerNote}
-${g.keys.map(([k, v]) => `- ${k.replace(/<[^>]+>/g, '')}: ${v}`).join('\n')}
+${(g.keys || []).map(([k, v]) => `- ${k.replace(/<[^>]+>/g, '')}: ${v}`).join('\n')}
 Tips:
-${g.tips.map((t) => `- ${t.replace(/<[^>]+>/g, '')}`).join('\n')}
+${(g.tips || []).map((t) => `- ${t.replace(/<[^>]+>/g, '')}`).join('\n')}
 FAQ:
 ${g.faq.map(([q, a]) => `Q: ${q}\nA: ${a}`).join('\n')}
 `).join('\n')}
