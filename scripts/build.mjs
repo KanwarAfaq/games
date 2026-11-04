@@ -376,6 +376,52 @@ const GAMES = [
       ['Can I play Starfall Protocol on my phone?', 'No. It needs a keyboard and mouse, so it works best on a desktop or laptop in a current browser.'],
     ],
   },
+  {
+    id: 'aether-run',
+    kind: 'bespoke',
+    name: 'Aether Run',
+    page: 'games/aether-run.html',
+    thumb: 'assets/img/thumb-aether-run.svg',
+    og: 'assets/img/og-starfall.png',
+    genre: 'Neon hover racer',
+    accent: 'var(--mint)',
+    tagline: 'Race a luminous skyline in your own antigravity craft.',
+    description: 'Aether Run is a neon hover-racing browser game with a procedural skyline, glowing light trails, collectable energy rings, and atmospheric sound effects.',
+    controls: 'Steer with A and D or arrows. Hold Shift to boost; mobile touch controls are included.',
+    faq: [['How do you play Aether Run?', 'Steer around red barriers, collect blue energy rings and hold boost to go faster.'], ['Is Aether Run playable on a phone?', 'Yes. The game has touch steering and boost controls.']],
+  },
+  {
+    id: 'moonlit-grove',
+    kind: 'bespoke',
+    name: 'Moonlit Grove',
+    page: 'games/moonlit-grove.html',
+    thumb: 'assets/img/thumb-moonlit-grove.svg',
+    og: 'assets/img/og-serpentine.png',
+    genre: 'Fantasy survival',
+    accent: 'var(--mint)',
+    tagline: 'Protect an enchanted sanctuary against the rising shadows.',
+    description: 'Moonlit Grove is a fantasy survival browser game featuring an enchanted sanctuary, spellcasting, glowing particles, progressive enemy waves and original synth sound effects.',
+    controls: 'Move with WASD or arrows, aim with the pointer and dash with Space or Shift. Touch controls included.',
+    faq: [['How do you play Moonlit Grove?', 'Move through the enchanted grove, aim with the mouse or touch, cast automatic spells and dash away from shadow enemies.'], ['Is Moonlit Grove free?', 'Yes, it runs entirely in your browser with no installation.']],
+  },
+  {
+    id: 'park-dash', kind: 'bespoke', name: 'Park Dash',
+    page: 'games/park-dash.html', thumb: 'assets/img/thumb-park-dash.svg', og: 'assets/img/og-skyhop.png',
+    genre: 'Kids running race', accent: 'var(--butter)',
+    tagline: 'Race three cheerful kids on foot through a colorful park grand prix.',
+    description: 'Park Dash is an animated kids running racing game with four rival runners, lanes, jumps, stars, sprinting and a 1500-meter finish line. No cars or scooters.',
+    controls: 'Use arrows or A/D to change lanes, Space to jump, Shift to sprint. Touch controls included.',
+    faq: [['How do you play Park Dash?', 'Race on foot against three kid rivals. Jump hurdles, dodge puddles, collect stars and sprint to the finish.'], ['Are there cars or scooters?', 'No. Park Dash is only a running race between kids on foot.']],
+  },
+  {
+    id: 'serpent-studio', kind: 'bespoke', name: 'Serpent Studio',
+    page: 'games/serpent-studio.html', thumb: 'assets/img/thumb-serpent-studio.svg', og: 'assets/img/og-serpentine.png',
+    genre: 'Customizable snake', accent: 'var(--mint)',
+    tagline: 'Four snake modes, three speeds and four glowing skins.',
+    description: 'Serpent Studio offers Classic, Zen, 90-second Sprint and Maze modes, three speed settings, four skins, glowing graphics and separate mode high scores.',
+    controls: 'Choose Classic, Zen, Sprint or Maze; steer with arrows, WASD or swipes. Customize speed and appearance.',
+    faq: [['What modes does Serpent Studio offer?', 'Classic, Zen with wraparound, timed Sprint and Maze obstacles.'], ['Can I customize difficulty and colors?', 'Yes, choose three speeds and four skins before starting.']],
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -416,7 +462,7 @@ const WEBSITE = {
   '@id': `${SITE.url}/#website`,
   url: `${SITE.url}/`,
   name: SITE.name,
-  description: 'Free browser games: 2D arcade games plus 3D adventure and racing.',
+  description: 'Free browser games: 2D arcade games plus 3D adventure, racing and shooter games.',
   inLanguage: 'en',
   publisher: { '@id': `${SITE.url}/#org` },
 };
@@ -600,7 +646,7 @@ const HOME_FAQ = [
   ['Are the games really free?', 'Yes. Every game is free, there are no in-app purchases and nothing to install.'],
   ['Do the games work on a phone?', `${GAMES.filter((g) => g.kind !== 'external').map((g) => g.name).join(', ')} work with touch as well as keyboard and mouse. ${GAMES.filter((g) => g.kind === 'external').map((g) => g.name).join(' and ')} are 3D games that need a keyboard, so they are best on a desktop or laptop.`],
   ['Where are my high scores saved?', 'Best scores are saved in your own browser with local storage. They never leave your device and there is no account to make.'],
-  ['Which game should I try first?', 'Try Starfall for fast action, Skyhop for a one-tap challenge, Lightmerge for a puzzle, Lumenfall for a 3D adventure, Neon Velocity for racing and Starfall Protocol for a 3D shooter.'],
+  ['Which game should I try first?', 'Try Starfall for fast action, Skyhop for a one-tap challenge, Lightmerge for a puzzle, Park Dash for kids running, Serpent Studio for customizable snake, Aether Run for neon hover racing, Moonlit Grove for fantasy survival, Lumenfall for a 3D adventure, Neon Velocity for racing and Starfall Protocol for a 3D shooter.'],
 ];
 
 function homePage() {
@@ -622,6 +668,17 @@ function homePage() {
         </article>`
   ).join('\n');
 
+  // Dashboard priority: feature all four new titles before the complete game grid.
+  const featuredIds = ['park-dash', 'serpent-studio', 'aether-run', 'moonlit-grove'];
+  const featuredCards = featuredIds.map((id) => {
+    const game = GAMES.find(g => g.id === id);
+    return '<article class="game-card" style="--accent:'+game.accent+'">' +
+      '<a class="game-card__media" href="'+game.page+'"><img src="'+game.thumb+'" alt="'+game.name+' cover" width="640" height="400"></a>' +
+      '<div class="game-card__body"><span class="tag">NEW · '+game.genre+'</span>' +
+      '<h3><a href="'+game.page+'">'+game.name+'</a></h3><p>'+game.tagline+'</p>' +
+      '<p class="game-card__controls">'+game.controls+'</p><div class="game-card__foot">' +
+      '<a class="btn" href="'+game.page+'">Play '+game.name+'</a></div></div></article>';
+  }).join('\n');
   const body = `      <section class="hero" aria-labelledby="hero-title">
         <div class="hero__inner">
           <div class="hero__copy">
@@ -642,9 +699,15 @@ function homePage() {
         </div>
       </section>
 
+      <section class="section" id="featured" aria-labelledby="featured-title">
+        <div class="container"><h2 class="section__title" id="featured-title">Featured · four new experiences</h2>
+        <p style="margin:0 0 1.5rem;color:var(--muted)">Kids foot racing, customizable snake, futuristic racing and magical survival.</p>
+        <div class="game-grid">${featuredCards}</div></div>
+      </section>
+
       <section class="section" id="games" aria-labelledby="games-title">
         <div class="container">
-          <h2 class="section__title" id="games-title">Choose your game</h2>
+          <h2 class="section__title" id="games-title">All ${GAMES.length} games</h2>
           <div class="game-grid">
 ${cards}
           </div>
@@ -1030,9 +1093,9 @@ URL: ${abs(g.page)}
 ${g.description}
 Controls: ${g.controls}
 ${g.pointerNote}
-${g.keys.map(([k, v]) => `- ${k.replace(/<[^>]+>/g, '')}: ${v}`).join('\n')}
+${(g.keys || []).map(([k, v]) => `- ${k.replace(/<[^>]+>/g, '')}: ${v}`).join('\n')}
 Tips:
-${g.tips.map((t) => `- ${t.replace(/<[^>]+>/g, '')}`).join('\n')}
+${(g.tips || []).map((t) => `- ${t.replace(/<[^>]+>/g, '')}`).join('\n')}
 FAQ:
 ${g.faq.map(([q, a]) => `Q: ${q}\nA: ${a}`).join('\n')}
 `).join('\n')}
@@ -1043,7 +1106,7 @@ ${HOME_FAQ.map(([q, a]) => `Q: ${q}\nA: ${a}`).join('\n')}
 const manifest = () => JSON.stringify({
   name: SITE.name,
   short_name: 'Arcade',
-  description: 'Free browser games: 2D arcade games plus 3D adventure and racing.',
+  description: 'Free browser games: 2D arcade games plus 3D adventure, racing and shooter games.',
   start_url: '/?source=pwa',
   scope: '/',
   display: 'standalone',
@@ -1153,7 +1216,7 @@ const pages = {
 };
 GAMES.forEach((g, i) => {
   const next = GAMES[(i + 1) % GAMES.length];
-  pages[g.page] = g.kind === 'external' ? externalGamePage(g, next) : gamePage(g, next);
+  if (g.kind !== 'bespoke') pages[g.page] = g.kind === 'external' ? externalGamePage(g, next) : gamePage(g, next);
 });
 
 for (const [file, content] of Object.entries(pages)) {

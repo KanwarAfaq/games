@@ -1,7 +1,7 @@
 {
   "name": "Kanwar Arcade",
   "short_name": "Arcade",
-  "description": "Free browser games: 2D arcade games plus 3D adventure and racing.",
+  "description": "Free browser games: 2D arcade games plus 3D adventure, racing and shooter games.",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
@@ -66,6 +66,22 @@
     {
       "name": "Starfall Protocol",
       "url": "/games/starfall-protocol.html"
+    },
+    {
+      "name": "Aether Run",
+      "url": "/games/aether-run.html"
+    },
+    {
+      "name": "Moonlit Grove",
+      "url": "/games/moonlit-grove.html"
+    },
+    {
+      "name": "Park Dash",
+      "url": "/games/park-dash.html"
+    },
+    {
+      "name": "Serpent Studio",
+      "url": "/games/serpent-studio.html"
     }
   ]
 }

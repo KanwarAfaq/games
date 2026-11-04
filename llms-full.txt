@@ -189,14 +189,70 @@ A: Move with WASD and aim with the mouse. Hold E at the terminal to restore the 
 Q: Can I play Starfall Protocol on my phone?
 A: No. It needs a keyboard and mouse, so it works best on a desktop or laptop in a current browser.
 
+## Aether Run (Neon hover racer)
+URL: https://games-psi-ashy.vercel.app/games/aether-run.html
+Aether Run is a neon hover-racing browser game with a procedural skyline, glowing light trails, collectable energy rings, and atmospheric sound effects.
+Controls: Steer with A and D or arrows. Hold Shift to boost; mobile touch controls are included.
+undefined
+
+Tips:
+
+FAQ:
+Q: How do you play Aether Run?
+A: Steer around red barriers, collect blue energy rings and hold boost to go faster.
+Q: Is Aether Run playable on a phone?
+A: Yes. The game has touch steering and boost controls.
+
+## Moonlit Grove (Fantasy survival)
+URL: https://games-psi-ashy.vercel.app/games/moonlit-grove.html
+Moonlit Grove is a fantasy survival browser game featuring an enchanted sanctuary, spellcasting, glowing particles, progressive enemy waves and original synth sound effects.
+Controls: Move with WASD or arrows, aim with the pointer and dash with Space or Shift. Touch controls included.
+undefined
+
+Tips:
+
+FAQ:
+Q: How do you play Moonlit Grove?
+A: Move through the enchanted grove, aim with the mouse or touch, cast automatic spells and dash away from shadow enemies.
+Q: Is Moonlit Grove free?
+A: Yes, it runs entirely in your browser with no installation.
+
+## Park Dash (Kids running race)
+URL: https://games-psi-ashy.vercel.app/games/park-dash.html
+Park Dash is an animated kids running racing game with four rival runners, lanes, jumps, stars, sprinting and a 1500-meter finish line. No cars or scooters.
+Controls: Use arrows or A/D to change lanes, Space to jump, Shift to sprint. Touch controls included.
+undefined
+
+Tips:
+
+FAQ:
+Q: How do you play Park Dash?
+A: Race on foot against three kid rivals. Jump hurdles, dodge puddles, collect stars and sprint to the finish.
+Q: Are there cars or scooters?
+A: No. Park Dash is only a running race between kids on foot.
+
+## Serpent Studio (Customizable snake)
+URL: https://games-psi-ashy.vercel.app/games/serpent-studio.html
+Serpent Studio offers Classic, Zen, 90-second Sprint and Maze modes, three speed settings, four skins, glowing graphics and separate mode high scores.
+Controls: Choose Classic, Zen, Sprint or Maze; steer with arrows, WASD or swipes. Customize speed and appearance.
+undefined
+
+Tips:
+
+FAQ:
+Q: What modes does Serpent Studio offer?
+A: Classic, Zen with wraparound, timed Sprint and Maze obstacles.
+Q: Can I customize difficulty and colors?
+A: Yes, choose three speeds and four skins before starting.
+
 ## General FAQ
 Q: What is Kanwar Arcade?
-A: Kanwar Arcade is a free collection of 9 browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lightmerge, Driftrock, Lumenfall, Neon Velocity, Starfall Protocol. They run in any modern browser with no download, no account and no ads.
+A: Kanwar Arcade is a free collection of 13 browser games: Starfall, Brick Rally, Serpentine, Skyhop, Lightmerge, Driftrock, Lumenfall, Neon Velocity, Starfall Protocol, Aether Run, Moonlit Grove, Park Dash, Serpent Studio. They run in any modern browser with no download, no account and no ads.
 Q: Are the games really free?
 A: Yes. Every game is free, there are no in-app purchases and nothing to install.
 Q: Do the games work on a phone?
-A: Starfall, Brick Rally, Serpentine, Skyhop, Lightmerge, Driftrock work with touch as well as keyboard and mouse. Lumenfall and Neon Velocity and Starfall Protocol are 3D games that need a keyboard, so they are best on a desktop or laptop.
+A: Starfall, Brick Rally, Serpentine, Skyhop, Lightmerge, Driftrock, Aether Run, Moonlit Grove, Park Dash, Serpent Studio work with touch as well as keyboard and mouse. Lumenfall and Neon Velocity and Starfall Protocol are 3D games that need a keyboard, so they are best on a desktop or laptop.
 Q: Where are my high scores saved?
 A: Best scores are saved in your own browser with local storage. They never leave your device and there is no account to make.
 Q: Which game should I try first?
-A: Try Starfall for fast action, Skyhop for a one-tap challenge, Lightmerge for a puzzle, Lumenfall for a 3D adventure, Neon Velocity for racing and Starfall Protocol for a 3D shooter.
+A: Try Starfall for fast action, Skyhop for a one-tap challenge, Lightmerge for a puzzle, Park Dash for kids running, Serpent Studio for customizable snake, Aether Run for neon hover racing, Moonlit Grove for fantasy survival, Lumenfall for a 3D adventure, Neon Velocity for racing and Starfall Protocol for a 3D shooter.
